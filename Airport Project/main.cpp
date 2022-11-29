@@ -7,19 +7,27 @@
 
 using namespace std;
 
-int main() {
-    Airports system = Airports();
-    
+int main() {  
     double currLong_;
     double currLat_;
+    double destLong_;
+    double destLat_;
+    double baggageAmount;
 
     cout << "Enter your current latitude: ";
     cin >> currLat_;
     cout << "Enter your current longitude: ";
     cin >> currLong_;
+    cout << "Enter your destination latitude: ";
+    cin >> destLat_;
+    cout << "Enter your destination longitude: ";
+    cin >> destLong_;
+    cout << "How much bags are you travelling with: ";
+    cin >> baggageAmount;
 
+    Airports system = Airports(currLat_, currLong_, destLat_, destLong_, baggageAmount);
 
-
+    //Check if there is a closed airport
     for (int i = 0; i < system.smallAirports.size(); i++) {
         if (system.smallAirports[i]->type == "closed") {
             std::cout << "Bruh" << " small" << "\n";
@@ -42,11 +50,13 @@ int main() {
     }
     std::cout << "Checked Large Airports" << system.largeAirports.size()<< "\n";
 
+    cout << system.calcDistance(41.97859955, -87.90480042, 25.273056, 51.608056)<<"\n";
+    cout << system.calcCost(41.97859955, -87.90480042, 25.273056, 51.608056, "large_airport") << "\n";
+
+
     //Haversine test cases
 
     //Calc Cost test cases
-
-
 
     return 0;    
 }

@@ -7,35 +7,39 @@
 #include <json/json.h>
 #include <math.h>
 
-//Constructor and Destructor
+// Constructor and Destructor
 Airports::Airports() {
     parseData();
     createGraph();
     currLat = 0.0;
     currLong = 0.0;
 }
-Airports::Airports(double lat_, double long_) {
+Airports::Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount) {
     parseData();
-    createGraph();
+    cout << "data parsed" << "\n";
     currLat = lat_;
     currLong = long_;
+    destLat = lat2_;
+    destLong = long2_;
+    baggage = baggageAmount;
+    createGraph();
 }
 Airports::~Airports() { destroyGraph(); }
 
 
 //Parse and Creating Graph
 void Airports::parseData() {
-    ifstream file("Airports.json"); //JSON data
-    Json::Value jsonData; //contains JSON Data
-    Json::Reader reader; //The reader
+    ifstream file("Airports.json"); // JSON data
+    Json::Value jsonData; // contains JSON Data
+    Json::Reader reader; // The reader
 
-    reader.parse(file, jsonData); //the reader will parse the Json data and place it into JSON data
+    reader.parse(file, jsonData); // the reader will parse the Json data and place it into JSON data
 
     /*
-    //We can print out the JSON data
+    // We can print out the JSON data
         cout << "total Json Data: " << jsonData << "\n";
 
-    //Or we can print out individual components of the JSON data
+    // Or we can print out individual components of the JSON data
         cout << "type: " << jsonData[0]["type"] << "\n";
         cout << "name: " << jsonData[0]["name"] << "\n";
         cout << "latitude_deg: " << jsonData[0]["latitude_deg"] << "\n";
@@ -65,12 +69,12 @@ void Airports::parseData() {
     }
 }
 void Airports::createGraph() {
-    //3 departure assumptions:
-    //Small airports -> closest medium airport
-    //medium airports -> all airports
-    //large airports -> medium and large airports
+    // 3 departure assumptions:
+    // Small airports -> closest medium airport
+    // medium airports -> all airports
+    // large airports -> medium and large airports
     
-    //Step 1: small -> med, med -> small
+    // Step 1: small -> med, med -> small
     for (int i = 0; i < smallAirports.size(); i++) {
         Airport* nearestAirport;
         double minCost = 100000000000;
@@ -80,17 +84,18 @@ void Airports::createGraph() {
             double lat2 = medAirports[j]->latitude;
             double long1 = smallAirports[i]->longitude;
             double long2 = medAirports[j]->longitude;
-            cost = calcCost(lat1, long1, lat2, long2);
+            cost = calcCost(lat1, long1, lat2, long2, "small_airport");
             if (minCost < cost) {
                 minCost = cost;
                 nearestAirport = medAirports[j];
             }
-            medAirports[j]->connections.insert({ smallAirports[i], calcCost(lat2, long2, lat1, long1) });
+            medAirports[j]->connections.insert({ smallAirports[i], calcCost(lat2, long2, lat1, long1, "medium_airport")});
         }
+        cout << i << "\n";
         smallAirports[i]->connections.insert({ nearestAirport, cost });
     }
     std::cout << "finished Small Airport" << "\n";
-    //Step 2: med -> large, large-> med, med -> med
+    // Step 2: med -> large, large-> med, med -> med
     for (int i = 0; i < medAirports.size(); i++) {
         double lat1 = medAirports[i]->latitude;
         double long1 = medAirports[i]->longitude;
@@ -98,19 +103,19 @@ void Airports::createGraph() {
         for (int k = 0; k < largeAirports.size(); k++) {
             double lat2 = largeAirports[k]->latitude;
             double long2 = largeAirports[k]->longitude;
-            medAirports[i]->connections.insert({ largeAirports[k], calcCost(lat1, long1, lat2, long2) });
-            largeAirports[k]->connections.insert({ medAirports[i], calcCost(lat2, long2, lat1, long1) });
+            medAirports[i]->connections.insert({ largeAirports[k], calcCost(lat1, long1, lat2, long2, "medium_airport") });
+            largeAirports[k]->connections.insert({ medAirports[i], calcCost(lat2, long2, lat1, long1, "large_airport") });
         }
         for (int k = 0; k < medAirports.size(); k++) {
             if (medAirports[i] != medAirports[k]) {
                 double lat2 = medAirports[k]->latitude;
                 double long2 = medAirports[k]->longitude;
-                medAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2) });
+                medAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2, "medium_airport")});
             }
         }
     }
     std::cout << "finished Medium airports" << "\n";
-    //Step 3: large -> large
+    // Step 3: large -> large
     for (int i = 0; i < largeAirports.size(); i++) {
         double lat1 = largeAirports[i]->latitude;
         double long1 = largeAirports[i]->longitude;
@@ -118,7 +123,7 @@ void Airports::createGraph() {
         for (int k = 0; k < largeAirports.size(); k++) {
             double lat2 = largeAirports[k]->latitude;
             double long2 = largeAirports[k]->longitude;
-            largeAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2) });
+            largeAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2, "large_airport")});
         }
     }
     std::cout << "finished Large airports" << "\n";
@@ -155,7 +160,7 @@ vector<Airports::Airport*> Airports::Djistrka(map<Airport*, double>, Airport*) {
 
 //Helpers
 double Airports::calcDistance(double lat1, double long1, double lat2, double long2) {
-    //We are going to compute distances using Haversine Formula
+    // We are going to compute distances using Haversine Formula
     double deltaLatRad = (lat2 - lat1) * ((3.14159265358979323846) / 180);
     double deltaLongRad = (long2 - long1) * ((3.14159265358979323846) / 180);
 
@@ -166,25 +171,105 @@ double Airports::calcDistance(double lat1, double long1, double lat2, double lon
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
     double d = 6371 * 2;
 
-    //d returns the distance in kilometers
+    // d returns the distance in kilometers
 	return d;
-    //Source: https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
+    // Source: https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
 }
-double Airports::calcCost(double lat1, double long1, double lat2, double long2) {
-    //We are going to make assumptions on the cost of travelling
+double Airports::calcCost(double lat1, double long1, double lat2, double long2, string startAirport) {
+    // We are going to make assumptions on the cost of travelling
     double distance = calcDistance(lat1, long1, lat2, long2);
-
+    // Lets assume that distance is large if it is greater than 6500 km
+    bool largeDistance = distance > 6500 ? true : false; 
     // Costs are determined by:
-    // 1) Base fare
-    // 2) Taxes and airport fees
-    // 3) Fuel surcharge
-    // 4) Service fee to issue
-    // 5) Food
-    // 6) Seat selection
-    // 7) Baggage
+    // 1) Base fare (https://www.tripsavvy.com/what-is-a-base-fare-468261)
+    // 2) Taxes and airport fees (need to check)
+    // 3) Fuel surcharge (depends on plane model)
+    // 4) Service fee to issue (need to check)
+    // 5) Food (fixed)
+    // 6) Seat selection (assume economy)
+    // 7) Baggage (assume no baggages)
     // Source: https://flightfox.com/tradecraft/how-do-airlines-set-prices
 
+    // On average, fuels costs are $7 per gallon (best case scenario) 
+    // of fuel for commercial use so we will use this https://executiveflyers.com/how-much-does-jet-fuel-cost/
 
-        
-	return 0.0;
+    // Base Fare (Ballpark Estimate after experimenting with Orbitz and Expedia and looking at different prices for international and domestic travels):
+    double BaseFare;
+    if (startAirport == "medium_airport") {
+        BaseFare = 350;
+    }
+    else if (startAirport == "large_airport") {
+        BaseFare = 750;
+    }
+    else {
+        BaseFare = 100;
+    }
+    // Ticket cost = Base Fare (original cost of flying) + Fees (Federal and other)
+    // Source: https://www.tripsavvy.com/what-is-a-base-fare-468261
+    double FederalFees;
+    if (largeDistance) {
+        FederalFees = 1.17 * (4.10 + 5.60 + ((4.50 + 18) / 2));
+    }
+    else {
+        FederalFees = 1.17 * (4.10 + 5.60 + ((4.50 + 18) / 2) + 200);
+    }
+
+    // Other Fees = Food ($9) + Snacks ($4) + Baggage (Ballpark Estimate Large Distance: 1 -> $0, 2 -> $100 , 3 -> $200)
+    // (Ballpark Estimate Smaller Distance: 1 -> $30, 2 -> $40 , 3 -> $125)
+    // Source: https://www.airfarewatchdog.com/blog/3802275/in-flight-drink-snack-prices/
+    // Source: https://thepointsguy.com/guide/airline-baggage-fees/
+    double OtherFees;
+    if (largeDistance) {
+        switch (baggage) {
+            case 2:
+                OtherFees = 9 + 4 + 100;
+            case 3:
+                OtherFees = 9 + 4 + 200;
+            default:
+                OtherFees = 9 + 4 + 0;
+        };
+    }
+    else {
+        switch (baggage) {
+            case 1:
+                OtherFees = 9 + 4 + 30;
+            case 2:
+                OtherFees = 9 + 4 + 40;
+            case 3:
+                OtherFees = 9 + 4 + 125;
+            default:
+                OtherFees = 9 + 4 + 0;
+        };
+    }
+
+    // Note: Fuel Cost = (kg / km) * 0.26 (gal / kg) * 7 ($ / gal) * distance (km) 
+    double MinFuelCosts = DBL_MAX;
+    if (startAirport == "large_airport") {
+        //Traverse every aircraft in large_airport
+        for (auto i = largeAirport.begin(); i != largeAirport.end(); ++i) {
+            if (distance < (i -> second)[0]) {
+                double FuelCost = ((i->second)[1] * 0.26 * 7 * distance) / (i->second)[2];
+                MinFuelCosts = (FuelCost < MinFuelCosts) ? FuelCost : MinFuelCosts;
+            }
+        }
+    }
+    else if (startAirport == "medium_airport") {
+        //Traverse every aircraft in mediums_airport
+        for (auto i = mediumAirport.begin(); i != mediumAirport.end(); ++i) {
+            if (distance < (i->second)[0]) {
+                double FuelCost = ((i->second)[1] * 0.26 * 7 * distance) / (i->second)[2];
+                MinFuelCosts = (FuelCost < MinFuelCosts) ? FuelCost : MinFuelCosts;
+            }
+        }
+    }
+    else {
+        //Traverse every aircraft in small_airport
+        for (auto i = smallAirport.begin(); i != smallAirport.end(); ++i) {
+            if (distance < (i->second)[0]) {
+                double FuelCost = ((i->second)[1] * 0.26 * 7 * distance) / (i->second)[2];
+                MinFuelCosts = (FuelCost < MinFuelCosts) ? FuelCost : MinFuelCosts;
+            }
+        }
+    }
+	return FederalFees + OtherFees + MinFuelCosts + BaseFare;
 }

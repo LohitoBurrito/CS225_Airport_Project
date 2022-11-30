@@ -50,13 +50,9 @@ int main() {
     }
     std::cout << "Checked Large Airports" << system.largeAirports.size()<< "\n";
 
-    cout << system.calcDistance(41.97859955, -87.90480042, 25.273056, 51.608056)<<"\n";
-    cout << system.calcCost(41.97859955, -87.90480042, 25.273056, 51.608056, "large_airport") << "\n";
-
-
     //Haversine test cases
-
+    cout << system.calcDistance(41.97859955, -87.90480042, 25.273056, 51.608056) << "\n"; //CHICAGO -> DOHA
     //Calc Cost test cases
-
+    cout << system.calcCost(41.97859955, -87.90480042, 25.273056, 51.608056, "large_airport") << "\n"; //CHICAGO -> DOHA
     return 0;    
 }

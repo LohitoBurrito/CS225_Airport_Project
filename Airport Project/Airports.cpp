@@ -91,7 +91,6 @@ void Airports::createGraph() {
             }
             medAirports[j]->connections.insert({ smallAirports[i], calcCost(lat2, long2, lat1, long1, "medium_airport")});
         }
-        cout << i << "\n";
         smallAirports[i]->connections.insert({ nearestAirport, cost });
     }
     std::cout << "finished Small Airport" << "\n";
@@ -161,15 +160,15 @@ vector<Airports::Airport*> Airports::Djistrka(map<Airport*, double>, Airport*) {
 //Helpers
 double Airports::calcDistance(double lat1, double long1, double lat2, double long2) {
     // We are going to compute distances using Haversine Formula
-    double deltaLatRad = (lat2 - lat1) * ((3.14159265358979323846) / 180);
-    double deltaLongRad = (long2 - long1) * ((3.14159265358979323846) / 180);
+    double deltaLatRad = (lat2 - lat1) * ((3.14159265358979323846) / 180.0);
+    double deltaLongRad = (long2 - long1) * ((3.14159265358979323846) / 180.0);
 
-    double lat1Rad = lat1 * ((3.14159265358979323846) / 180);
-    double lat2Rad = lat2 * ((3.14159265358979323846) / 180);
+    double lat1Rad = lat1 * ((3.14159265358979323846) / 180.0);
+    double lat2Rad = lat2 * ((3.14159265358979323846) / 180.0);
 
-    double a = pow(sin(deltaLatRad / 2), 2) + cos(lat1Rad) * cos(lat2Rad) * pow(deltaLongRad / 2, 2);
-    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    double d = 6371 * 2;
+    double a = pow(sin(deltaLatRad / 2), 2) + cos(lat1Rad) * cos(lat2Rad) * pow(sin(deltaLongRad / 2), 2);
+    double c = 2 * asin(sqrt(a));
+    double d = 6371 * c;
 
     // d returns the distance in kilometers
 	return d;

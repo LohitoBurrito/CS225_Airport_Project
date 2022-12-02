@@ -171,6 +171,7 @@ void Airports::BFS(Airport *startPoint)
             if (i->first->visited != 1)
             {
                 q.push(i->first);
+		i->first->visited = 1;
             }
         }
     }

@@ -147,8 +147,35 @@ void Airports::destroyGraph() {
     std::cout << "Destroyed Large airports" << "\n";
 }
 //Algorithm
-vector<Airports::Airport*> Airports::BFS(Airport* startPoint) {
-	return vector<Airports::Airport*>();
+void Airports::BFS(Airport *startPoint)
+{
+    queue q;
+    startPoint->visited = 1;
+    q.push(startPoint);
+    departure = startPoint;
+    destination = startPoint;
+    while (!q.empty)
+    {
+        Airport *front = q.front();
+        q.pop();
+        double currDistancetoDeparture = calcDistance(departure->latitude, departure->longitude, currLat, currLong);
+        double airportDistancetoDeparture = calcDistance(currLat, currLong, front->latitude, front->longitude);
+        if (abs(currDistancetoDeparture) > abs(airportDistancetoDeparture))
+            departure = front;
+        double currDistancetoDestination = calcDistance(destination->latitude, destination->longitude, destLat, destLong);
+        double airportDistancetoDestination = calcDistance(destLat, destLong, front->latitude, front->longitude);
+        if (abs(currDistancetoDestination) > abs(airportDistancetoDestination))
+            destination = front;
+        for (auto i : connections)
+        {
+            if (i->first->visited != 1)
+            {
+                q.push(i->first);
+            }
+        }
+    }
+
+   
 }
 vector<Airports::Airport*> Airports::Kosaraju(int num, Airport* startPoint) {
 	return vector<Airports::Airport*>();

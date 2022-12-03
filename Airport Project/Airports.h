@@ -12,7 +12,7 @@ class Airports {
 			string name;
 			double latitude;
 			double longitude;
-            int visited = 0;
+            		int visited = 0;
 			map<Airport*, double> connections;
 		};
 

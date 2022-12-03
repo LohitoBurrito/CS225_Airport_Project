@@ -12,6 +12,7 @@ class Airports {
 			string name;
 			double latitude;
 			double longitude;
+            int visited = 0;
 			map<Airport*, double> connections;
 		};
 
@@ -27,7 +28,7 @@ class Airports {
 		void destroyGraph();
 
 		//Algorithm
-		vector<Airport*> BFS(Airport* startPoint);
+		void BFS(Airport* startPoint);
 		vector<Airport*> Kosaraju(int num, Airport* startPoint);
 		vector<Airport*> Djistrka(map<Airport*, double>, Airport*);
 
@@ -78,8 +79,7 @@ class Airports {
         };
 
         // Fuel Burn Rate (kg / hr) * 1/Avg Speed (hr / km) = Fuel Burn Rate (kg / km) 
-        map<string, vector<double>> smallAirport =
-        {
+        map<string, vector<double>> smallAirport = {
             {"Beechcraft King Air 350", vector<double> {2798,0.79,8}},
             {"BN2 Islander", vector<double> {1400,0.36,9}},
             {"Cessna Caravan", vector<double> {1982,0.77,14}},
@@ -95,4 +95,7 @@ class Airports {
 		double destLat;
 		double destLong;
 		int baggage;
+        	Airport* departure;
+        	Airport* destination;
+        	vector<Airport*> solution;
 };

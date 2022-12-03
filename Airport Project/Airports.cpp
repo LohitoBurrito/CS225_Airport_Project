@@ -24,6 +24,7 @@ Airports::Airports(double lat_, double long_, double lat2_, double long2_, int b
     destLat = lat2_;
     destLong = long2_;
     baggage = baggageAmount;
+
     createGraph();
 }
 Airports::~Airports() { destroyGraph(); }
@@ -55,7 +56,7 @@ void Airports::parseData() {
             airport->type = jsonData[i]["type"].asString();
             airport->name = jsonData[i]["name"].asString();
             airport->latitude = jsonData[i]["latitude_deg"].asDouble();
-            airport->longitude = jsonData[i]["latitude_deg"].asDouble();
+            airport->longitude = jsonData[i]["longitude_deg"].asDouble();
 
             if (jsonData[i]["type"].asString() == "small_airport") {
                 smallAirports.push_back(airport);
@@ -176,8 +177,6 @@ void Airports::BFS(Airport* startPoint)
             }
         }
     }
-
-
 }
 vector<Airports::Airport*> Airports::Kosaraju(int num, Airport* startPoint) {
     return vector<Airports::Airport*>();
@@ -301,3 +300,20 @@ double Airports::calcCost(double lat1, double long1, double lat2, double long2, 
     }
     return FederalFees + OtherFees + MinFuelCosts + BaseFare;
 }
+
+
+//Getters and Setters
+void Airports::setCurrLong(double val) { currLong = val; }
+void Airports::setCurrLat(double val) { currLat = val; }
+void Airports::setDestLong(double val) { destLong = val; }
+void Airports::setDestLat(double val) { destLat = val; }
+void Airports::setBaggage(int val) { baggage = val; }
+void Airports::setDeparture(Airports::Airport* val) { departure = val; }
+void Airports::setDestination(Airports::Airport* val) { destination = val; }
+double Airports::getCurrLong() { return currLong; }
+double Airports::getCurrLat() { return currLat; }
+double Airports::getDestLong() { return destLong; }
+double Airports::getDestLat() { return destLat; }
+int Airports::getBaggage() { return baggage; }
+Airports::Airport* Airports::getDeparture() { return departure; }
+Airports::Airport* Airports::getDestination() { return destination; }

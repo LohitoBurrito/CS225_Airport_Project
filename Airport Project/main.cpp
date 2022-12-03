@@ -7,49 +7,36 @@
 
 using namespace std;
 
-int main() {  
-    double currLong_;
-    double currLat_;
-    double destLong_;
-    double destLat_;
-    double baggageAmount;
-
-    cout << "Enter your current latitude: ";
-    cin >> currLat_;
-    cout << "Enter your current longitude: ";
-    cin >> currLong_;
-    cout << "Enter your destination latitude: ";
-    cin >> destLat_;
-    cout << "Enter your destination longitude: ";
-    cin >> destLong_;
-    cout << "How much bags are you travelling with: ";
-    cin >> baggageAmount;
-
-    Airports system = Airports(currLat_, currLong_, destLat_, destLong_, baggageAmount);
-
+void TestClosedAirports(Airports& system) {
     //Closed Airport Check
-    for (int i = 0; i < system.smallAirports.size(); i++) {
-        if (system.smallAirports[i]->type == "closed") {
-            std::cout << "Bruh" << " small" << "\n";
-            return 0;
+    try {
+        for (int i = 0; i < system.smallAirports.size(); i++) {
+            if (system.smallAirports[i]->type == "closed" || system.smallAirports[i]->type == "heliport" || system.smallAirports[i]->type == "seaplane_base") {
+                std::cout << "Bruh" << " small" << "\n";
+                throw(0);
+            }
         }
-    }
-    std::cout << "Checked " << system.smallAirports.size() << " Small Airports" << "\n";
-    for (int i = 0; i < system.medAirports.size(); i++) {
-        if (system.medAirports[i]->type == "closed") {
-            std::cout << "Bruh" << " mediums" << "\n";
-            return 0;
+        std::cout << "Checked " << system.smallAirports.size() << " Small Airports" << "\n";
+        for (int i = 0; i < system.medAirports.size(); i++) {
+            if (system.medAirports[i]->type == "closed" || system.medAirports[i]->type == "heliport" || system.medAirports[i]->type == "seaplane_base") {
+                std::cout << "Bruh" << " mediums" << "\n";
+                throw(1);
+            }
         }
-    }
-    std::cout << "Checked "<<system.medAirports.size()<<" Medium Airports" << "\n";
-    for (int i = 0; i < system.largeAirports.size(); i++) {
-        if (system.largeAirports[i]->type == "closed") {
-            std::cout << "Bruh" << " large" << "\n";
-            return 0;
+        std::cout << "Checked " << system.medAirports.size() << " Medium Airports" << "\n";
+        for (int i = 0; i < system.largeAirports.size(); i++) {
+            if (system.largeAirports[i]->type == "closed" || system.largeAirports[i]->type == "heliport" || system.largeAirports[i]->type == "seaplane_base") {
+                std::cout << "Bruh" << " large" << "\n";
+                throw(2);
+            }
         }
+        std::cout << "Checked " << system.largeAirports.size() << " Large Airports" << "\n";
     }
-    std::cout << "Checked " << system.largeAirports.size() << " Large Airports" << "\n";
-
+    catch (int num) {
+        cout << "You have an unwanted airport in: " << ((num == 0) ? "Small Airports" : ((num == 1) ? "Medium Airports" : "Large Airports")) << "\n";
+    }
+}
+void TestCalcAlgos(Airports& system) {
     //Chicago -> Doha
     try {
         double dist = system.calcDistance(41.97859955, -87.90480042, 25.273056, 51.608056);
@@ -60,8 +47,8 @@ int main() {
             cout << "CHICAGO -> DOHA Distance is valid\n";
         }
     }
-    catch(int num) {
-        cout << "CHICAGO -> DOHA distance in km:\nCalculated Distance: "<<num<<"km\nEstimated Distance: 11479km\n";
+    catch (int num) {
+        cout << "CHICAGO -> DOHA distance in km:\nCalculated Distance: " << num << "km\nEstimated Distance: 11479km\n";
         cout << "Haversine Distance too far out\n";
     }
     try {
@@ -75,7 +62,7 @@ int main() {
         }
     }
     catch (int num) {
-        cout << "CHICAGO -> DOHA cost ($):\nCalculated Cost: $" << num << "\nEstimated Cost: $"<<2778.38/2<<"\n";
+        cout << "CHICAGO -> DOHA cost ($):\nCalculated Cost: $" << num << "\nEstimated Cost: $" << 2778.38 / 2 << "\n";
         cout << "Calculated cost is a little too far off\n";
     }
 
@@ -107,6 +94,83 @@ int main() {
         cout << "CHICAGO -> FRANKFURT cost ($):\nCalculated Cost: $" << num << "\nEstimated Cost: $" << 2276 / 2 << "\n";
         cout << "Calculated cost is a little too far off\n";
     }
+}
+void TestBFS(Airports& system) {
+    try {
+        //CHICAGO -> DOHA
+        double cLat = system.getCurrLat();
+        double cLong = system.getCurrLong();
+        double dLat = system.getDestLat();
+        double dLong = system.getDestLong();
+        system.setCurrLat(41.97859955);
+        system.setCurrLong(-87.90480042);
+        system.setDestLat(25.273056);
+        system.setDestLong(51.608056);
+        system.BFS(system.medAirports[0]);
+        if (system.getDestination()->name != "Hamad International Airport") {
+            throw(1);
+        }
+        if (system.getDeparture()->name != "Chicago O'Hare International Airport") {
+            throw(0);
+        }
+
+        system.setCurrLat(cLat);
+        system.setCurrLong(cLong);
+        system.setDestLat(dLat);
+        system.setDestLong(dLong);
+        cout << "BFS WORKS!" << "\n";
+    }
+    catch (int num) {
+        if (num == 1) {
+            cout << "Wrong destination" << "\n";
+        }
+        else {
+            cout << "Wrong departure" << "\n";
+        }
+    }
+}
+void TestDikstras(const Airports& system) {
+    try {
+
+    }
+    catch (int num) {
+
+    }
+}
+void TestKosuraju(const Airports& system) {
+    try {
+
+    }
+    catch (int num) {
+
+    }
+}
+
+int main() {  
+    double currLong_;
+    double currLat_;
+    double destLong_;
+    double destLat_;
+    double baggageAmount;
+
+    cout << "Enter your current latitude: ";
+    cin >> currLat_;
+    cout << "Enter your current longitude: ";
+    cin >> currLong_;
+    cout << "Enter your destination latitude: ";
+    cin >> destLat_;
+    cout << "Enter your destination longitude: ";
+    cin >> destLong_;
+    cout << "How much bags are you travelling with: ";
+    cin >> baggageAmount;
+
+    Airports system = Airports(currLat_, currLong_, destLat_, destLong_, baggageAmount);
+
+    TestClosedAirports(system);
+    TestCalcAlgos(system);
+    TestBFS(system);
+    //TestDikstras(system);
+    //TestKosuraju(system);
 
     return 0;    
 }

@@ -36,6 +36,23 @@ class Airports {
 		double calcDistance(double lat1, double long1, double lat2, double long2);
 		double calcCost(double lat1, double long1, double lat2, double long2, string startAirport);
 
+		//Setters
+		void setCurrLong(double val);
+		void setCurrLat(double val);
+		void setDestLong(double val);
+		void setDestLat(double val);
+		void setBaggage(int val);
+		void setDeparture(Airport* val);
+		void setDestination(Airport* val);
+		//Getters
+		double getCurrLong();
+		double getCurrLat();
+		double getDestLong();
+		double getDestLat();
+		int getBaggage();
+		Airport* getDeparture();
+		Airport* getDestination();
+
 		//Public Variables
 		vector<Airport*> smallAirports;
 		vector<Airport*> medAirports;
@@ -95,7 +112,7 @@ class Airports {
 		double destLat;
 		double destLong;
 		int baggage;
-        	Airport* departure;
-        	Airport* destination;
-        	vector<Airport*> solution;
+		Airport* departure;
+		Airport* destination;
+		vector<Airport*> solution;
 };

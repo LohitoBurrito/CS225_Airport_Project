@@ -3,10 +3,12 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <queue>
 #include <fstream>
 #include <json/json.h>
 #include <math.h>
 
+using namespace std;
 // Constructor and Destructor
 Airports::Airports() {
     parseData();
@@ -38,7 +40,6 @@ void Airports::parseData() {
     /*
     // We can print out the JSON data
         cout << "total Json Data: " << jsonData << "\n";
-
     // Or we can print out individual components of the JSON data
         cout << "type: " << jsonData[0]["type"] << "\n";
         cout << "name: " << jsonData[0]["name"] << "\n";
@@ -73,7 +74,7 @@ void Airports::createGraph() {
     // Small airports -> closest medium airport
     // medium airports -> all airports
     // large airports -> medium and large airports
-    
+
     // Step 1: small -> med, med -> small
     for (int i = 0; i < smallAirports.size(); i++) {
         Airport* nearestAirport;
@@ -89,7 +90,7 @@ void Airports::createGraph() {
                 minCost = cost;
                 nearestAirport = medAirports[j];
             }
-            medAirports[j]->connections.insert({ smallAirports[i], calcCost(lat2, long2, lat1, long1, "medium_airport")});
+            medAirports[j]->connections.insert({ smallAirports[i], calcCost(lat2, long2, lat1, long1, "medium_airport") });
         }
         smallAirports[i]->connections.insert({ nearestAirport, cost });
     }
@@ -109,7 +110,7 @@ void Airports::createGraph() {
             if (medAirports[i] != medAirports[k]) {
                 double lat2 = medAirports[k]->latitude;
                 double long2 = medAirports[k]->longitude;
-                medAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2, "medium_airport")});
+                medAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2, "medium_airport") });
             }
         }
     }
@@ -122,7 +123,7 @@ void Airports::createGraph() {
         for (int k = 0; k < largeAirports.size(); k++) {
             double lat2 = largeAirports[k]->latitude;
             double long2 = largeAirports[k]->longitude;
-            largeAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2, "large_airport")});
+            largeAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2, "large_airport") });
         }
     }
     std::cout << "finished Large airports" << "\n";
@@ -147,16 +148,16 @@ void Airports::destroyGraph() {
     std::cout << "Destroyed Large airports" << "\n";
 }
 //Algorithm
-void Airports::BFS(Airport *startPoint)
+void Airports::BFS(Airport* startPoint)
 {
-    queue q;
+    queue<Airport*> q;
     startPoint->visited = 1;
     q.push(startPoint);
     departure = startPoint;
     destination = startPoint;
-    while (!q.empty)
+    while (!q.empty())
     {
-        Airport *front = q.front();
+        Airport* front = q.front();
         q.pop();
         double currDistancetoDeparture = calcDistance(departure->latitude, departure->longitude, currLat, currLong);
         double airportDistancetoDeparture = calcDistance(currLat, currLong, front->latitude, front->longitude);
@@ -166,23 +167,23 @@ void Airports::BFS(Airport *startPoint)
         double airportDistancetoDestination = calcDistance(destLat, destLong, front->latitude, front->longitude);
         if (abs(currDistancetoDestination) > abs(airportDistancetoDestination))
             destination = front;
-        for (auto i : connections)
+        for (auto i : front -> connections)
         {
-            if (i->first->visited != 1)
+            if (i.first->visited != 1)
             {
-                q.push(i->first);
-		i->first->visited = 1;
+                q.push(i.first);
+                i.first->visited = 1;
             }
         }
     }
 
-   
+
 }
 vector<Airports::Airport*> Airports::Kosaraju(int num, Airport* startPoint) {
-	return vector<Airports::Airport*>();
+    return vector<Airports::Airport*>();
 }
 vector<Airports::Airport*> Airports::Djistrka(map<Airport*, double>, Airport*) {
-	return vector<Airports::Airport*>();
+    return vector<Airports::Airport*>();
 }
 
 //Helpers
@@ -199,14 +200,14 @@ double Airports::calcDistance(double lat1, double long1, double lat2, double lon
     double d = 6371 * c;
 
     // d returns the distance in kilometers
-	return d;
+    return d;
     // Source: https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
 }
 double Airports::calcCost(double lat1, double long1, double lat2, double long2, string startAirport) {
     // We are going to make assumptions on the cost of travelling
     double distance = calcDistance(lat1, long1, lat2, long2);
     // Lets assume that distance is large if it is greater than 6500 km
-    bool largeDistance = distance > 6500 ? true : false; 
+    bool largeDistance = distance > 6500 ? true : false;
     // Costs are determined by:
     // 1) Base fare (https://www.tripsavvy.com/what-is-a-base-fare-468261)
     // 2) Taxes and airport fees (need to check)
@@ -248,24 +249,24 @@ double Airports::calcCost(double lat1, double long1, double lat2, double long2, 
     double OtherFees;
     if (largeDistance) {
         switch (baggage) {
-            case 2:
-                OtherFees = 9 + 4 + 100;
-            case 3:
-                OtherFees = 9 + 4 + 200;
-            default:
-                OtherFees = 9 + 4 + 0;
+        case 2:
+            OtherFees = 9 + 4 + 100;
+        case 3:
+            OtherFees = 9 + 4 + 200;
+        default:
+            OtherFees = 9 + 4 + 0;
         };
     }
     else {
         switch (baggage) {
-            case 1:
-                OtherFees = 9 + 4 + 30;
-            case 2:
-                OtherFees = 9 + 4 + 40;
-            case 3:
-                OtherFees = 9 + 4 + 125;
-            default:
-                OtherFees = 9 + 4 + 0;
+        case 1:
+            OtherFees = 9 + 4 + 30;
+        case 2:
+            OtherFees = 9 + 4 + 40;
+        case 3:
+            OtherFees = 9 + 4 + 125;
+        default:
+            OtherFees = 9 + 4 + 0;
         };
     }
 
@@ -274,7 +275,7 @@ double Airports::calcCost(double lat1, double long1, double lat2, double long2, 
     if (startAirport == "large_airport") {
         //Traverse every aircraft in large_airport
         for (auto i = largeAirport.begin(); i != largeAirport.end(); ++i) {
-            if (distance < (i -> second)[0]) {
+            if (distance < (i->second)[0]) {
                 double FuelCost = ((i->second)[1] * 0.26 * 7 * distance) / (i->second)[2];
                 MinFuelCosts = (FuelCost < MinFuelCosts) ? FuelCost : MinFuelCosts;
             }
@@ -298,5 +299,5 @@ double Airports::calcCost(double lat1, double long1, double lat2, double long2, 
             }
         }
     }
-	return FederalFees + OtherFees + MinFuelCosts + BaseFare;
+    return FederalFees + OtherFees + MinFuelCosts + BaseFare;
 }

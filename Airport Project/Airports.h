@@ -12,11 +12,16 @@ class Airports {
 			string name;
 			double latitude;
 			double longitude;
-            		int visited = 0;
+		    	int visited = 0;
+		    	double fullCost = DBL_MAX;
+		    	Airport* previous = NULL;
 			map<Airport*, double> connections;
 		};
 
 	public:
+        struct cmpFunction {
+            bool operator()(Airport* a, Airport* b);
+        };
 		//Airports Constructor
 		Airports();
 		Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount);
@@ -30,7 +35,7 @@ class Airports {
 		//Algorithm
 		void BFS(Airport* startPoint);
 		vector<Airport*> Kosaraju(int num, Airport* startPoint);
-		vector<Airport*> Djistrka(map<Airport*, double>, Airport*);
+		void Djistrka(Airport* departure, Airport* destination);
 
 		//Helpers
 		double calcDistance(double lat1, double long1, double lat2, double long2);
@@ -52,6 +57,7 @@ class Airports {
 		int getBaggage();
 		Airport* getDeparture();
 		Airport* getDestination();
+		vector<Airport*> getSolution();
 
 		//Public Variables
 		vector<Airport*> smallAirports;
@@ -111,8 +117,8 @@ class Airports {
 		double currLat;
 		double destLat;
 		double destLong;
-		int baggage;
-		Airport* departure;
-		Airport* destination;
-		vector<Airport*> solution;
+	    	int baggage;
+        	Airport* departure;
+        	Airport* destination;
+        	vector<Airport*> solution;
 };

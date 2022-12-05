@@ -48,10 +48,10 @@ class Airports {
 		//Helpers
 		double calcDistance(double lat1, double long1, double lat2, double long2);
 		double calcCost(double lat1, double long1, double lat2, double long2, string startAirport);
-        	void DFS(Airport* vertex, std::list<Airports::Airport*> visited, std::list<Airports::Airport*> finished, std::stack<Airports::Airport*> S);
-       		void DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph);
-        	bool contains(std::list<Airport*> list, Airport* vertex);
-        	void transposeGraph(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed);
+      void DFS(Airport* vertex, std::list<Airports::Airport*> visited, std::list<Airports::Airport*> finished, std::stack<Airports::Airport*> S);
+      void DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph);
+      bool contains(std::list<Airport*> list, Airport* vertex);
+      void transposeGraph(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed);
 
 		//Setters
 		void setCurrLong(double val);

@@ -95,7 +95,7 @@ void TestCalcAlgos(Airports& system) {
         cout << "Calculated cost is a little too far off\n";
     }
 }
-void TestBFS(Airports& system) {
+void TestBFSAndDikstras(Airports& system) {
     try {
         //CHICAGO -> DOHA
         double cLat = system.getCurrLat();
@@ -113,12 +113,13 @@ void TestBFS(Airports& system) {
         if (system.getDeparture()->name != "Chicago O'Hare International Airport") {
             throw(0);
         }
-
+        cout << "BFS WORKS!" << "\n";
+        system.Djistrka(system.getDeparture(), system.getDestination());
+        
         system.setCurrLat(cLat);
         system.setCurrLong(cLong);
         system.setDestLat(dLat);
         system.setDestLong(dLong);
-        cout << "BFS WORKS!" << "\n";
     }
     catch (int num) {
         if (num == 1) {
@@ -129,15 +130,7 @@ void TestBFS(Airports& system) {
         }
     }
 }
-void TestDikstras(const Airports& system) {
-    try {
-
-    }
-    catch (int num) {
-
-    }
-}
-void TestKosuraju(const Airports& system) {
+void TestBFSAndKosuraju(Airports& system) {
     try {
 
     }
@@ -168,9 +161,8 @@ int main() {
 
     TestClosedAirports(system);
     TestCalcAlgos(system);
-    TestBFS(system);
-    //TestDikstras(system);
-    //TestKosuraju(system);
+    TestBFSAndDikstras(system);
+    //TestBFSAndKosuraju(system);
 
     return 0;    
 }

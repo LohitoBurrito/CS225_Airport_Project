@@ -177,9 +177,41 @@ void Airports::BFS(Airport* startPoint)
         }
     }
 }
-vector<Airports::Airport*> Airports::Kosaraju(int num, Airport* startPoint) {
-    return vector<Airports::Airport*>();
+vector<vector<Airports::Airport*>> Airports::Kosaraju(int num, Airport* startPoint) {
+    std::list<Airports::Airport*> visited;
+    std::list<Airports::Airport*> finished;
+    std::stack<Airports::Airport*> S;
+
+    for (std::pair<Airport*, double> v : startPoint->connections) {
+        if (!contains(visited, v.first)) {
+            DFS (v.first, visited, finished, S);
+        }
+    }
+    std::map<Airport*, vector<Airport*>> t_graph;
+    std::list<Airport*> r_visited;
+    transposeGraph(startPoint, r_visited, t_graph);
+    visited = list<Airport*>();
+
+    vector<vector<Airport*>> sc_components;
+
+    while (!S.empty()) {
+
+        if (!contains(visited, S.top())) {
+            DFS(S.top(), visited, t_graph);
+        }
+        S.pop();
+
+        if (!visited.empty()) {
+            vector<Airport*> component;
+            for (Airport* a : visited) {
+                component.push_back(a);
+            }
+            sc_components.push_back(component);
+        }
+    }
+    return sc_components;
 }
+
 void Airports::Djistrka(Airport* departure, Airport* destination) {
     departure->fullCost = 0;
     // <Airport Object, total cost from departurn, increasing order>
@@ -223,6 +255,49 @@ bool Airports::cmpFunction::operator()(Airport* a, Airport* b) {
 }
 
 //Helpers
+void Airports::DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph) {
+    visited.push_back(vertex);
+    for (Airport* a : graph.at(vertex)) {
+        if (contains(visited, a)) {
+            DFS(a, visited, graph);
+        }
+    }
+}
+
+void Airports::DFS(Airports::Airport *vertex, std::list<Airports::Airport *> visited, std::list<Airports::Airport*> finished,
+                   std::stack<Airports::Airport *> S) {
+    visited.push_back(vertex);
+    for (std::pair<Airport*, double> v : vertex->connections) {
+        if (!contains(visited, v.first)) {
+            DFS(v.first, visited, finished, S);
+        }
+    }
+    finished.push_back(vertex);
+    S.push(vertex);
+}
+
+void Airports::transposeGraph(Airports::Airport *vertex, list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed) {
+    visited.push_back(vertex);
+    for (std::pair<Airport*, double> v : vertex->connections) {
+        if (transposed.count(v.first) > 0) {
+            transposed.at(v.first).push_back(vertex);
+        } else {
+            vector<Airport*> vt;
+            vt.push_back(vertex);
+            transposed.emplace(v.first, vt);
+        }
+    }
+}
+
+bool Airports::contains(list<Airport *> list, Airport* vertex) {
+    for (Airport* a : list) {
+        if (a == vertex) {
+            return true;
+        }
+    }
+    return false;
+}
+
 double Airports::calcDistance(double lat1, double long1, double lat2, double long2) {
     // We are going to compute distances using Haversine Formula
     double deltaLatRad = (lat2 - lat1) * ((3.14159265358979323846) / 180.0);

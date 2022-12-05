@@ -1,6 +1,6 @@
 ## Leading Question 
 
-The goal of this project is to find the most cost effective path from going from one airport to another airport. Essentially, if we look at the distances/time it takes to go from airport A to airport B, the shortest path is to go from airport A to airport B, but sometimes it is not the most cost effective path or even a path at all. Sometimes people may need to take connecting flights to have the most cost effective flight. Therefore, the question we are trying to solve is which path will lead to the lowest money wastage while trying to optimize distances? We will accomplish this using 3 algorithms, Breadth first search for traversal for traversing a graph, Dijkstra’s algorithm to determine the shortest and most cost-effective path, and Kosaraju’s algorithm for an edge case involving connected components.
+The goal of this project is to find the most cost effective path from going from one airport to another airport. Essentially, if we look at the distances/time it takes to go from airport A to airport B, the shortest path is to go from airport A to airport B, but sometimes it is not the most cost effective path or even a path at all. Sometimes people may need to take connecting flights to have the most cost effective flight. Therefore, the question we are trying to solve is which path will lead to the lowest money wastage while trying to optimize distances? We will accomplish this using 3 algorithms, Breadth First Search for traversal for traversing a graph, Dijkstra’s algorithm to determine the shortest and most cost-effective path, and Kosaraju’s algorithm for an edge case involving connected components.
 
 ## Dataset Acquisition and Processing
 
@@ -62,7 +62,7 @@ Our BFS algorithm will output a map of airport names to vectors. This will be th
 
 ### Function Efficiency
 
-Our BFS algorithm will run in O(V) or O(2E) where V represents the amount of vertices and E represents the amount of edges. Worst case scenario, it will travel all of the nodes making it O(n). Since we are traveling to every node in BFS, we have to account for each node we go to. For Djistrkas, we also travel to every node, therefore it will also be O(V) or O(2E). Kosaraju’s algorithm takes O(V + E) time complexity. In this algorithm, we need to perform a transpose on the graph which will also take O(V + E). Essentially, we have O(V + E) + O(V + E) which ends up becoming an overall O(V + E) in terms of runtime for Kosaraju’s algorithm.
+Our BFS algorithm will run in O(V) or O(2E) where V represents the number of vertices and E represents the number of edges. Worst case scenario, it will travel all of the nodes making it O(n). Since we are traveling to every node in BFS, we have to account for each node we go to. For Djistrkas, we also travel to every node, therefore it will also be O(V) or O(2E). Kosaraju’s algorithm takes O(V + E) time complexity. In this algorithm, we need to perform a transpose on the graph which will also take O(V + E). Essentially, we have O(V + E) + O(V + E) which ends up becoming an overall O(V + E) in terms of runtime for Kosaraju’s algorithm.
 
 
 
@@ -116,4 +116,4 @@ Have viable product ready
 To-Dos:
 
 Presentation 
-Make PPT
+Make PPT & video

@@ -1,7 +1,15 @@
 #pragma once
-#include <vector>
-#include <map>
+#include "Airports.h"
+#include <iostream>
+#include <stdio.h>
 #include <string>
+#include <queue>
+#include <fstream>
+#include <json/json.h>
+#include <math.h>
+#include <list>
+#include <map>
+#include <stack>
 
 using namespace std;
 
@@ -34,12 +42,16 @@ class Airports {
 
 		//Algorithm
 		void BFS(Airport* startPoint);
-		vector<Airport*> Kosaraju(int num, Airport* startPoint);
+		vector<vector<Airport*>> Kosaraju(int num, Airport* startPoint);
 		void Djistrka(Airport* departure, Airport* destination);
 
 		//Helpers
 		double calcDistance(double lat1, double long1, double lat2, double long2);
 		double calcCost(double lat1, double long1, double lat2, double long2, string startAirport);
+        	void DFS(Airport* vertex, std::list<Airports::Airport*> visited, std::list<Airports::Airport*> finished, std::stack<Airports::Airport*> S);
+       		void DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph);
+        	bool contains(std::list<Airport*> list, Airport* vertex);
+        	void transposeGraph(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed);
 
 		//Setters
 		void setCurrLong(double val);

@@ -24,7 +24,6 @@ Airports::Airports(double lat_, double long_, double lat2_, double long2_, int b
     destLat = lat2_;
     destLong = long2_;
     baggage = baggageAmount;
-
     createGraph();
 }
 Airports::~Airports() { destroyGraph(); }
@@ -124,7 +123,7 @@ void Airports::createGraph() {
         for (int k = 0; k < largeAirports.size(); k++) {
             double lat2 = largeAirports[k]->latitude;
             double long2 = largeAirports[k]->longitude;
-            largeAirports[i]->connections.insert({ medAirports[k], calcCost(lat1, long1, lat2, long2, "large_airport") });
+            largeAirports[i]->connections.insert({ largeAirports[k], calcCost(lat1, long1, lat2, long2, "large_airport") });
         }
     }
     std::cout << "finished Large airports" << "\n";
@@ -181,8 +180,46 @@ void Airports::BFS(Airport* startPoint)
 vector<Airports::Airport*> Airports::Kosaraju(int num, Airport* startPoint) {
     return vector<Airports::Airport*>();
 }
-vector<Airports::Airport*> Airports::Djistrka(map<Airport*, double>, Airport*) {
-    return vector<Airports::Airport*>();
+void Airports::Djistrka(Airport* departure, Airport* destination) {
+    departure->fullCost = 0;
+    // <Airport Object, total cost from departurn, increasing order>
+    priority_queue<Airport*, vector<Airport*>, cmpFunction> allAirports;
+    for (int i = 0; i < (int) smallAirports.size(); i++) {
+        allAirports.push(smallAirports[i]);
+    }
+    for (int i = 0; i < (int) medAirports.size(); i++) {
+        allAirports.push(medAirports[i]);
+    }
+    for (int i = 0; i < (int) largeAirports.size(); i++) {
+        allAirports.push(largeAirports[i]);
+    }
+    vector<Airport*> usedAirports;
+    
+    while (!allAirports.empty()) {
+        Airport* currentAirport = allAirports.top();
+        allAirports.pop();
+        usedAirports.push_back(currentAirport);
+
+        for (auto i = currentAirport->connections.begin(); i != currentAirport->connections.end(); ++i) {
+            if (find(usedAirports.begin(), usedAirports.end(), i->first) == usedAirports.end()) {
+                if (i->second + currentAirport->fullCost < i->first->fullCost) {
+                    i->first->fullCost = i->second + currentAirport->fullCost;
+                    i->first->previous = currentAirport;
+                }
+            }
+        }
+    }
+    Airport* val = destination;
+    while (val != NULL) {
+        solution.push_back(val);
+        cout << val->name << "\n";
+        val = val->previous;
+    }
+    reverse(solution.begin(), solution.end());
+}
+
+bool Airports::cmpFunction::operator()(Airport* a, Airport* b) {
+    return a->fullCost > b->fullCost;
 }
 
 //Helpers
@@ -317,3 +354,4 @@ double Airports::getDestLat() { return destLat; }
 int Airports::getBaggage() { return baggage; }
 Airports::Airport* Airports::getDeparture() { return departure; }
 Airports::Airport* Airports::getDestination() { return destination; }
+vector<Airports::Airport*>Airports::getSolution() { return solution; }

@@ -194,7 +194,7 @@ int main() {
     cout << "How much bags are you travelling with: ";
     cin >> baggageAmount;
 
-    Airports system = Airports(currLat_, currLong_, destLat_, destLong_, baggageAmount);
+    Airports system = Airports(currLat_, currLong_, destLat_, destLong_, baggageAmount, "Airports.json");
 
     TestClosedAirports(system);
     TestCalcAlgos(system);

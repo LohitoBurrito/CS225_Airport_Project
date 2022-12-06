@@ -24,7 +24,7 @@ private:
 public:
     //Airports Constructor
     Airports();
-    Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount);
+    Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount, string filename);
     ~Airports();
 
     //Parse and Creating Graph
@@ -120,6 +120,7 @@ private:
     double destLat;
     double destLong;
     int baggage;
+    string fileName;
     Airport* departure = nullptr;
     Airport* destination = nullptr;
     vector<Airport*> solution;

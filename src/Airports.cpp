@@ -12,6 +12,7 @@
 using namespace std;
 // Constructor and Destructor
 Airports::Airports() {
+    fileName = "Airports.json";
     parseData();
     currLat = 0.0;
     currLong = 0.0;
@@ -20,7 +21,8 @@ Airports::Airports() {
     baggage = 0;
     createGraph();
 }
-Airports::Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount) {
+Airports::Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount, string filename) {
+    fileName = filename;
     parseData();
     cout << "data parsed" << "\n";
     currLat = lat_;
@@ -35,7 +37,7 @@ Airports::~Airports() { destroyGraph(); }
 
 //Parse and Creating Graph
 void Airports::parseData() {
-    ifstream file("../tests/data/Airports.json"); // JSON data
+    ifstream file("../tests/data/" + fileName); // JSON data
     Json::Value jsonData; // contains JSON Data
     file >> jsonData;
 

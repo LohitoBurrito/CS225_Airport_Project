@@ -33,12 +33,12 @@ public:
     void destroyGraph();
 
     //Algorithm
-    void BFS(Airport* startPoint);
+    bool BFS(Airport* startPoint);
     vector<vector<Airport*>> Kosaraju(int num, Airport* startPoint);
     void Djistrka();
 
     //Helpers
-    double calcDistance(double lat1, double long1, double lat2, double long2);
+    static double calcDistance(double lat1, double long1, double lat2, double long2);
     double calcCost(double lat1, double long1, double lat2, double long2, const string& startAirport);
     void DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph);
     void DFS(Airport* vertex, std::list<Airport*> visited, std::list<Airport*> finished, std::stack<Airport*> S);

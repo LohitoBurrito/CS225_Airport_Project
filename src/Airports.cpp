@@ -83,7 +83,7 @@ void Airports::createGraph() {
     // Step 1: small -> closest med, med -> small
     for (int i = 0; i < (int) smallAirports.size(); i++) {
         Airport* nearestAirport;
-        double minCost = 100000000000;
+        double minCost = DBL_MAX;
         double cost;
         for (int j = 0; j < (int) medAirports.size(); j++) {
             double lat1 = smallAirports[i]->latitude;
@@ -152,7 +152,7 @@ void Airports::destroyGraph() {
     std::cout << "Destroyed Large airports" << "\n";
 }
 //Algorithm
-void Airports::BFS(Airport* startPoint)
+bool Airports::BFS(Airport* startPoint)
 {
     queue<Airport*> q;
     startPoint->visited = 1;
@@ -180,9 +180,13 @@ void Airports::BFS(Airport* startPoint)
             }
         }
     }
+    //Reset visited bit
     for (int i = 0; i < (int) medAirports.size(); i++) { medAirports[i]->visited = 0; }
     for (int i = 0; i < (int) largeAirports.size(); i++) { largeAirports[i]->visited = 0; }
     for (int i = 0; i < (int) smallAirports.size(); i++) { smallAirports[i]->visited = 0; }
+
+    // if destination does not equal departure, run Djikstra, otherwise run Kosaraju
+    return destination != departure;
 }
 vector<vector<Airports::Airport*>> Airports::Kosaraju(int num, Airport* startPoint) {
     std::list<Airports::Airport*> visited;
@@ -393,23 +397,28 @@ double Airports::calcCost(double lat1, double long1, double lat2, double long2, 
         switch (baggage) {
             case 2:
                 OtherFees = 9 + 4 + 100;
+                break;
             case 3:
                 OtherFees = 9 + 4 + 200;
+                break;
             default:
                 OtherFees = 9 + 4 + 0;
-        };
+        }
     }
     else {
         switch (baggage) {
             case 0:
                 OtherFees = 9 + 4 + 0;
+                break;
             case 1:
                 OtherFees = 9 + 4 + 30;
+                break;
             case 2:
                 OtherFees = 9 + 4 + 40;
+                break;
             default:
                 OtherFees = 9 + 4 + 125;
-        };
+        }
     }
 
     // Note: Fuel Cost = (kg / km) * 0.26 (gal / kg) * 7 ($ / gal) * distance (km) 

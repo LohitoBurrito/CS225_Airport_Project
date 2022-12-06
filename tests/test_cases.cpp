@@ -1,16 +1,28 @@
 #pragma once
+#include <catch2/catch_test_macros.hpp>
 #include "Airports.h"
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <queue>
 #include <fstream>
-#include <json/json.h>
-#include <math.h>
+#include <jsoncpp/json/json.h>
+#include <cmath>
 
 using namespace std;
 
-TEST_CASE( "Test Dijkstra's algorithm", "[dijkstra]" ){
+TEST_CASE( "Test CalcDist and CalcCost Algos 1", "[calcAlgos]"){
+    //im about to morb
+}
+TEST_CASE( "Test CalcDist and CalcCost Algos 2", "[calcAlgos]"){
+    //im about to morb
+}
+TEST_CASE( "Test BFS + Dijkstra algorithm 1", "[bfs && dijkstra]" ){
   //im about to morb
-
+}
+TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
+    //im about to morb
+}
+TEST_CASE( "Test BFS + Kosaraju algorithm 2", "[bfs && dijkstra]" ){
+    //im about to morb
 }

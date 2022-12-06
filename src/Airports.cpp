@@ -218,12 +218,12 @@ vector<vector<Airports::Airport*>> Airports::Kosaraju(int num, Airport* startPoi
 }
 //Helpers
 void Airports::DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph) {
-visited.push_back(vertex);
-for (Airport* a : graph.at(vertex)) {
-if (contains(visited, a)) {
-DFS(a, visited, graph);
-}
-}
+    visited.push_back(vertex);
+    for (Airport* a : graph.at(vertex)) {
+        if (contains(visited, a)) {
+            DFS(a, visited, graph);
+        }
+    }
 }
 
 void Airports::DFS(Airports::Airport* vertex, std::list<Airports::Airport*> visited, std::list<Airports::Airport*> finished,
@@ -238,17 +238,17 @@ void Airports::DFS(Airports::Airport* vertex, std::list<Airports::Airport*> visi
     S.push(vertex);
 }
 void Airports::transposeGraph(Airports::Airport* vertex, list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed) {
-visited.push_back(vertex);
-for (std::pair<Airport*, double> v : vertex->connections) {
-if (transposed.count(v.first) > 0) {
-transposed.at(v.first).push_back(vertex);
-}
-else {
-vector<Airport*> vt;
-vt.push_back(vertex);
-transposed.emplace(v.first, vt);
-}
-}
+    visited.push_back(vertex);
+    for (std::pair<Airport*, double> v : vertex->connections) {
+        if (transposed.count(v.first) > 0) {
+            transposed.at(v.first).push_back(vertex);
+        }
+        else {
+            vector<Airport*> vt;
+            vt.push_back(vertex);
+            transposed.emplace(v.first, vt);
+        }
+    }
 }
 
 bool Airports::contains(list<Airport*> list, Airport* vertex) {

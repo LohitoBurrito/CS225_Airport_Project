@@ -35,7 +35,7 @@ Airports::~Airports() { destroyGraph(); }
 
 //Parse and Creating Graph
 void Airports::parseData() {
-    ifstream file("../tests/data/test2.json"); // JSON data
+    ifstream file("../tests/data/Airports.json"); // JSON data
     Json::Value jsonData; // contains JSON Data
     file >> jsonData;
 
@@ -78,7 +78,7 @@ void Airports::createGraph() {
     // medium airports -> all airports
     // large airports -> medium and large airports
 
-    // Step 1: small -> med, med -> small
+    // Step 1: small -> closest med, med -> small
     for (int i = 0; i < (int) smallAirports.size(); i++) {
         Airport* nearestAirport;
         double minCost = 100000000000;
@@ -261,18 +261,6 @@ bool Airports::contains(list<Airport*> list, Airport* vertex) {
 }
 void Airports::Djistrka() {
     departure->fullCost = 0;
-    // <Airport Object, total cost from departurn, increasing order>
-    /*priority_queue<Airport*, vector<Airport*>, cmpFunction> allAirports;
-    for (int i = 0; i < (int) smallAirports.size(); i++) {
-        allAirports.push(smallAirports[i]);
-    }
-    for (int i = 0; i < (int) medAirports.size(); i++) {
-        allAirports.push(medAirports[i]);
-    }
-    for (int i = 0; i < (int) largeAirports.size(); i++) {
-        allAirports.push(largeAirports[i]);
-    }
-     */
     vector<Airport*> allAirports;
     for (int i = 0; i < (int) smallAirports.size(); i++) {
         allAirports.push_back(smallAirports[i]);
@@ -283,64 +271,34 @@ void Airports::Djistrka() {
     for (int i = 0; i < (int) largeAirports.size(); i++) {
         allAirports.push_back(largeAirports[i]);
     }
-    for (int i = 0; i < (int) allAirports.size(); i++) {
-        for (int j = i; j < (int) allAirports.size(); j++) {
-            if (allAirports[j]->fullCost > allAirports[i]->fullCost) {
-                Airport* temp = allAirports[j];
-                allAirports[j] = allAirports[i];
-                allAirports[i] = temp;
-            }
+    size_t size = allAirports.size();
+    for (int i = 0; i < (int) size; i++) {
+        if (allAirports[i]->fullCost < allAirports[allAirports.size() - 1]->fullCost) {
+            Airport* temp = allAirports[i];
+            allAirports[i] = allAirports[size - 1];
+            allAirports[size - 1] = temp;
         }
     }
-    vector<Airport*> usedAirports;
-
     while (!allAirports.empty()) {
-        //Airport* currentAirport = allAirports.top();
         Airport* currentAirport = allAirports.back();
-        //allAirports.pop();
         allAirports.pop_back();
-        usedAirports.push_back(currentAirport);
-        //cout << currentAirport->name << "\n";
+        currentAirport->visited = 1;
         for (auto i = currentAirport->connections.begin(); i != currentAirport->connections.end(); ++i) {
-            if (find(usedAirports.begin(), usedAirports.end(), i->first) == usedAirports.end()) {
-                //cout << i->second <<" "<< currentAirport->fullCost << " " << i->first->fullCost << "\n";
-                //cout << i->first->name << "\n";
-
+            if (i->first->visited == 0) {
                 if (i->second + currentAirport->fullCost < i->first->fullCost) {
                     i->first->fullCost = i->second + currentAirport->fullCost;
                     i->first->previous = currentAirport;
                 }
-
-                /*cout << "updated " << i->first->fullCost << " " << i->first->name << " ";
-                if (i->first->previous != NULL) {
-                    cout << (i->first->previous->name) << "\n";
-                }
-                else {
-                    cout << "\n";
-                }
-                */
             }
         }
-        /*
-        priority_queue<Airport*, vector<Airport*>, cmpFunction> temp;
-        while (!allAirports.empty()) {
-            temp.push(allAirports.top());
-            allAirports.pop();
-            cout<<"a"<<"\n";
-        }
-        cout <<"a"<<"\n";
-        allAirports = temp;
-         */
-        for (int i = 0; i < (int) allAirports.size(); i++) {
-            for (int j = i; j < (int) allAirports.size(); j++) {
-                if (allAirports[j]->fullCost > allAirports[i]->fullCost) {
-                    Airport* temp = allAirports[j];
-                    allAirports[j] = allAirports[i];
-                    allAirports[i] = temp;
-                }
+        size = allAirports.size();
+        for (int i = 0; i < (int) size; i++) {
+            if (allAirports[i]->fullCost < allAirports[allAirports.size() - 1]->fullCost) {
+                Airport* temp = allAirports[i];
+                allAirports[i] = allAirports[size - 1];
+                allAirports[size - 1] = temp;
             }
         }
-        //cout << "\n";
     }
     Airport* val = destination;
     do {
@@ -351,9 +309,20 @@ void Airports::Djistrka() {
     cout << val->name << "\n";
     solution.push_back(val);
     reverse(solution.begin(), solution.end());
-    for (auto & usedAirport : usedAirports) {
-        usedAirport -> previous = nullptr;
-        usedAirport -> fullCost = DBL_MAX;
+    for (int i = 0; i < (int) smallAirports.size(); i++) {
+        smallAirports[i]->previous = nullptr;
+        smallAirports[i]->fullCost = DBL_MAX;
+        smallAirports[i]->visited = 0;
+    }
+    for (int i = 0; i < (int) medAirports.size(); i++) {
+        medAirports[i]->previous = nullptr;
+        medAirports[i]->fullCost = DBL_MAX;
+        medAirports[i]->visited = 0;
+    }
+    for (int i = 0; i < (int) largeAirports.size(); i++) {
+        largeAirports[i]->previous = nullptr;
+        largeAirports[i]->fullCost = DBL_MAX;
+        largeAirports[i]->visited = 0;
     }
 }
 

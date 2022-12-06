@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include <stack>
+#include <cfloat>
 
 using namespace std;
 
@@ -16,14 +17,11 @@ private:
         double longitude;
         int visited = 0;
         double fullCost = DBL_MAX;
-        Airport* previous = NULL;
+        Airport* previous = nullptr;
         map<Airport*, double> connections;
     };
 
 public:
-    struct cmpFunction {
-        bool operator()(Airport* a, Airport* b);
-    };
     //Airports Constructor
     Airports();
     Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount);
@@ -37,16 +35,15 @@ public:
     //Algorithm
     void BFS(Airport* startPoint);
     vector<vector<Airport*>> Kosaraju(int num, Airport* startPoint);
-    void Djistrka(Airport* departure, Airport* destination);
+    void Djistrka();
 
     //Helpers
     double calcDistance(double lat1, double long1, double lat2, double long2);
-    double calcCost(double lat1, double long1, double lat2, double long2, string startAirport);
+    double calcCost(double lat1, double long1, double lat2, double long2, const string& startAirport);
     void DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph);
     void DFS(Airport* vertex, std::list<Airport*> visited, std::list<Airport*> finished, std::stack<Airport*> S);
     void transposeGraph(Airport* vertex, list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed);
     bool contains(list<Airport*> list, Airport* vertex);
-
     //Setters
     void setCurrLong(double val);
     void setCurrLat(double val);
@@ -56,11 +53,10 @@ public:
     void setDeparture(Airport* val);
     void setDestination(Airport* val);
     //Getters
-    double getCurrLong();
-    double getCurrLat();
-    double getDestLong();
-    double getDestLat();
-    int getBaggage();
+    double getCurrLong() const;
+    double getCurrLat() const;
+    double getDestLong() const;
+    double getDestLat() const;
     Airport* getDeparture();
     Airport* getDestination();
     vector<Airport*> getSolution();
@@ -124,7 +120,7 @@ private:
     double destLat;
     double destLong;
     int baggage;
-    Airport* departure;
-    Airport* destination;
+    Airport* departure = nullptr;
+    Airport* destination = nullptr;
     vector<Airport*> solution;
 };

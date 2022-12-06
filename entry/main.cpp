@@ -1,8 +1,11 @@
+//
+// Created by lohit on 12/5/2022.
+//
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <fstream>
-#include <json/json.h>
+#include <jsoncpp/json/json.h>
 #include "Airports.h"
 
 using namespace std;
@@ -10,21 +13,21 @@ using namespace std;
 void TestClosedAirports(Airports& system) {
     //Closed Airport Check
     try {
-        for (int i = 0; i < system.smallAirports.size(); i++) {
+        for (int i = 0; i < (int) system.smallAirports.size(); i++) {
             if (system.smallAirports[i]->type == "closed" || system.smallAirports[i]->type == "heliport" || system.smallAirports[i]->type == "seaplane_base") {
                 std::cout << "Bruh" << " small" << "\n";
                 throw(0);
             }
         }
         std::cout << "Checked " << system.smallAirports.size() << " Small Airports" << "\n";
-        for (int i = 0; i < system.medAirports.size(); i++) {
+        for (int i = 0; i < (int) system.medAirports.size(); i++) {
             if (system.medAirports[i]->type == "closed" || system.medAirports[i]->type == "heliport" || system.medAirports[i]->type == "seaplane_base") {
                 std::cout << "Bruh" << " mediums" << "\n";
                 throw(1);
             }
         }
         std::cout << "Checked " << system.medAirports.size() << " Medium Airports" << "\n";
-        for (int i = 0; i < system.largeAirports.size(); i++) {
+        for (int i = 0; i < (int) system.largeAirports.size(); i++) {
             if (system.largeAirports[i]->type == "closed" || system.largeAirports[i]->type == "heliport" || system.largeAirports[i]->type == "seaplane_base") {
                 std::cout << "Bruh" << " large" << "\n";
                 throw(2);
@@ -82,7 +85,7 @@ void TestCalcAlgos(Airports& system) {
     }
     try {
         double cost = system.calcCost(41.97859955, -87.90480042, 50.026402, 8.54313, "large_airport");
-        double expediaCost = 2276 / 2;
+        double expediaCost = 2276.0 / 2;
         if (abs(cost - expediaCost) > 400) {
             throw(cost);
         }
@@ -90,7 +93,7 @@ void TestCalcAlgos(Airports& system) {
             cout << "CHICAGO -> FRANKFURT Cost is valid\n";
         }
     }
-    catch (int num) {
+    catch (double num) {
         cout << "CHICAGO -> FRANKFURT cost ($):\nCalculated Cost: $" << num << "\nEstimated Cost: $" << 2276 / 2 << "\n";
         cout << "Calculated cost is a little too far off\n";
     }
@@ -114,8 +117,7 @@ void TestBFSAndDikstras(Airports& system) {
             throw(0);
         }
         cout << "FIRST BFS WORKS!" << "\n";
-        system.Djistrka(system.getDeparture(), system.getDestination());
-
+        system.Djistrka();
         system.setCurrLat(cLat);
         system.setCurrLong(cLong);
         system.setDestLat(dLat);
@@ -148,7 +150,7 @@ void TestBFSAndDikstras(Airports& system) {
             throw(0);
         }
         cout << "SECOND BFS WORKS!" << "\n";
-        system.Djistrka(system.getDeparture(), system.getDestination());
+        system.Djistrka();
 
         system.setCurrLat(cLat);
         system.setCurrLong(cLong);

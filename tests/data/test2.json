@@ -1,0 +1,42 @@
+[
+  {
+    "type": "medium_airport",
+    "name": "Hongyuan Airport",
+    "latitude_deg": 32.53154,
+    "longitude_deg": 102.35224,
+    "elevation_ft": 11600,
+    "continent": "AS",
+    "municipality": "Aba",
+    "iata_code": "AHJ"
+  },
+  {
+    "type": "large_airport",
+    "name": "Hamad International Airport",
+    "latitude_deg": 25.273056,
+    "longitude_deg": 51.608056,
+    "elevation_ft": 13,
+    "continent": "AS",
+    "municipality": "Doha",
+    "iata_code": "DOH"
+  },
+  {
+    "type": "large_airport",
+    "name": "Chicago O'Hare International Airport",
+    "latitude_deg": 41.97859955,
+    "longitude_deg": -87.90480042,
+    "elevation_ft": 672,
+    "continent": "NA",
+    "municipality": "Chicago",
+    "iata_code": "ORD"
+  },
+  {
+    "type": "medium_airport",
+    "name": "Dakhla Airport",
+    "latitude_deg": 23.71829987,
+    "longitude_deg": -15.93200016,
+    "elevation_ft": 36,
+    "continent": "AF",
+    "municipality": "Dakhla",
+    "iata_code": "VIL"
+  }
+]

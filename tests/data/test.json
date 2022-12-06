@@ -1,0 +1,43 @@
+[
+  {
+    "type": "small_airport",
+    "name": "Aurora Municipal Airport",
+    "latitude_deg": 41.77190018,
+    "longitude_deg": -88.47570038,
+    "elevation_ft": 712,
+    "continent": "NA",
+    "municipality": "Chicago/Aurora",
+    "iata_code": "AUZ"
+  },
+  {
+    "type": "large_airport",
+    "name": "Chicago O'Hare International Airport",
+    "latitude_deg": 41.97859955,
+    "longitude_deg": -87.90480042,
+    "elevation_ft": 672,
+    "continent": "NA",
+    "municipality": "Chicago",
+    "iata_code": "ORD"
+  },
+  {
+    "type": "medium_airport",
+    "name": "Coleman A. Young Municipal Airport",
+    "latitude_deg": 42.40919876,
+    "longitude_deg": -83.00990295,
+    "elevation_ft": 626,
+    "continent": "NA",
+    "municipality": "Detroit",
+    "iata_code": "DET"
+  },
+  {
+    "type": "medium_airport",
+    "name": "Dakhla Airport",
+    "latitude_deg": 23.71829987,
+    "longitude_deg": -15.93200016,
+    "elevation_ft": 36,
+    "continent": "AF",
+    "municipality": "Dakhla",
+    "iata_code": "VIL"
+  }
+]
+]du

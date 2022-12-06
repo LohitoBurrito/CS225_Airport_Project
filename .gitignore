@@ -1,0 +1,7 @@
+mp_schedule-build/
+build/
+test
+.obj
+*.o
+*.d
+/cmake-build-debug/

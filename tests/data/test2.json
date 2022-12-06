@@ -1,26 +1,6 @@
 [
   {
     "type": "medium_airport",
-    "name": "Coleman A. Young Municipal Airport",
-    "latitude_deg": 42.40919876,
-    "longitude_deg": -83.00990295,
-    "elevation_ft": 626,
-    "continent": "NA",
-    "municipality": "Detroit",
-    "iata_code": "DET"
-  },
-  {
-    "type": "small_airport",
-    "name": "Aurora Municipal Airport",
-    "latitude_deg": 41.77190018,
-    "longitude_deg": -88.47570038,
-    "elevation_ft": 712,
-    "continent": "NA",
-    "municipality": "Chicago/Aurora",
-    "iata_code": "AUZ"
-  },
-  {
-    "type": "medium_airport",
     "name": "Hongyuan Airport",
     "latitude_deg": 32.53154,
     "longitude_deg": 102.35224,

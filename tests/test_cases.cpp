@@ -57,13 +57,23 @@ TEST_CASE( "Test BFS + Dijkstra algorithm 1", "[bfs && dijkstra]" ){
     REQUIRE(system.getSolution().size() == 2);
 }
 TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
-    Airports system = Airports(41.77190018, -88.47570038, 23.71829987, -15.93200016, 2, "test.json");
+    Airports system = Airports(41.77190018, -88.47570038, 23.71829987, -15.93200016, 2, "test3.json");
     system.BFS(system.medAirports[0]);
     REQUIRE(system.getDestination()->name == "Dakhla Airport");
     REQUIRE(system.getDeparture()->name == "Aurora Municipal Airport");
     system.Djistrka();
     REQUIRE(system.getSolution().size() == 3);
 }
-TEST_CASE( "Test BFS + Kosaraju algorithm 2", "[bfs && dijkstra]" ){
+TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && dijkstra]" ){
     //im about to morb
+    Airports system = Airports(41.77190018, -88.47570038, 41.77190018, -88.47570038, 2, "test.json");
+    system.BFS(system.medAirports[0]);
+    REQUIRE(system.getDestination() == system.getDeparture());
+    vector<vector<Airports::Airport*>> connectedComponents = system.Kosaraju(system.getDeparture());
+    for (int i = 0; i < (int) connectedComponents.size(); i++) {
+        for (int j = 0; j < (int) connectedComponents[i].size(); j++) {
+            cout<<connectedComponents[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
 }

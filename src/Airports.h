@@ -9,7 +9,7 @@
 using namespace std;
 
 class Airports {
-private:
+public:
     struct Airport {
         string type;
         string name;
@@ -34,7 +34,7 @@ public:
 
     //Algorithm
     bool BFS(Airport* startPoint);
-    vector<vector<Airport*>> Kosaraju(int num, Airport* startPoint);
+    vector<vector<Airport*>> Kosaraju(Airport* startPoint);
     void Djistrka();
 
     //Helpers

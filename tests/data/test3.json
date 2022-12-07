@@ -1,0 +1,52 @@
+[
+  {
+    "type": "large_airport",
+    "name": "Chicago O'Hare International Airport",
+    "latitude_deg": 41.97859955,
+    "longitude_deg": -87.90480042,
+    "elevation_ft": 672,
+    "continent": "NA",
+    "municipality": "Chicago",
+    "iata_code": "ORD"
+  },
+  {
+    "type": "large_airport",
+    "name": "Suvarnabhumi Airport",
+    "latitude_deg": 13.68109989,
+    "longitude_deg": 100.7470016,
+    "elevation_ft": 5,
+    "continent": "AS",
+    "municipality": "Bangkok",
+    "iata_code": "BKK"
+  },
+  {
+    "type": "large_airport",
+    "name": "Shanghai Pudong International Airport",
+    "latitude_deg": 31.14340019,
+    "longitude_deg": 121.8050003,
+    "elevation_ft": 13,
+    "continent": "AS",
+    "municipality": "Shanghai",
+    "iata_code": "PVG"
+  },
+  {
+    "type": "large_airport",
+    "name": "King Fahd International Airport",
+    "latitude_deg": 26.47120094,
+    "longitude_deg": 49.79790115,
+    "elevation_ft": 72,
+    "continent": "AS",
+    "municipality": "Ad Dammam",
+    "iata_code": "DMM"
+  },
+  {
+    "type": "large_airport",
+    "name": "Cairo International Airport",
+    "latitude_deg": 30.12190056,
+    "longitude_deg": 31.40559959,
+    "elevation_ft": 382,
+    "continent": "AF",
+    "municipality": "Cairo",
+    "iata_code": "CAI"
+  }
+]

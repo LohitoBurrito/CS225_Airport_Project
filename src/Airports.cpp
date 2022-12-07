@@ -188,7 +188,7 @@ bool Airports::BFS(Airport* startPoint)
     // if destination does not equal departure, run Djikstra, otherwise run Kosaraju
     return destination != departure;
 }
-vector<vector<Airports::Airport*>> Airports::Kosaraju(int num, Airport* startPoint) {
+vector<vector<Airports::Airport*>> Airports::Kosaraju(Airport* startPoint) {
     std::list<Airports::Airport*> visited;
     std::list<Airports::Airport*> finished;
     std::stack<Airports::Airport*> S;

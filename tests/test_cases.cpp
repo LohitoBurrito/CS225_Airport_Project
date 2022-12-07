@@ -54,6 +54,14 @@ TEST_CASE( "Test BFS + Dijkstra algorithm 1", "[bfs && dijkstra]" ){
     REQUIRE(system.getDeparture()->name == "Chicago O'Hare International Airport");
     system.Djistrka();
     REQUIRE(system.getSolution().size() == 2);
+    cout << "\nPath: ";
+    for (size_t i = 0; i < system.getSolution().size(); i++) {
+        if (i == system.getSolution().size() - 1) {
+            cout << system.getSolution()[i] -> name <<"\n\n";
+        } else {
+            cout << system.getSolution()[i] -> name << " -> ";
+        }
+    }
 }
 TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
     Airports system = Airports(41.77190018, -88.47570038, 23.71829987, -15.93200016, 2, "test.json");
@@ -62,6 +70,14 @@ TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
     REQUIRE(system.getDeparture()->name == "Aurora Municipal Airport");
     system.Djistrka();
     REQUIRE(system.getSolution().size() == 3);
+    cout << "\nPath: ";
+    for (size_t i = 0; i < system.getSolution().size(); i++) {
+        if (i == system.getSolution().size() - 1) {
+            cout << system.getSolution()[i] -> name <<"\n\n";
+        } else {
+            cout << system.getSolution()[i] -> name << " -> ";
+        }
+    }
 }
 TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && dijkstra]" ){
     //im about to morb

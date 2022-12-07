@@ -51,7 +51,6 @@ void Airports::parseData() {
         cout << "longitude_deg: " << jsonData[0]["longitude_deg"] << "\n";
     */
 
-    cout << jsonData.size() << "\n";
     for (int i = 0; i < (int) jsonData.size(); i++) {
         //Place each airport in the specified type private vector
         //Note if the airport is "closed," it will be discarded
@@ -309,11 +308,10 @@ void Airports::Djistrka() {
     Airport* val = destination;
     do {
         solution.push_back(val);
-        cout << val->name << "\n";
         val = val->previous;
     } while (val != departure);
-    cout << val->name << "\n";
     solution.push_back(val);
+
     reverse(solution.begin(), solution.end());
     for (int i = 0; i < (int) smallAirports.size(); i++) {
         smallAirports[i]->previous = nullptr;

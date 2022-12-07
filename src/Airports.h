@@ -10,6 +10,7 @@ using namespace std;
 
 class Airports {
 public:
+    //How each Airports Node is structured
     struct Airport {
         string type;
         string name;
@@ -22,7 +23,8 @@ public:
     };
 
 public:
-    //Airports Constructor
+    //Airports Constructor: Calls createGraph(), parseData(), and sets private variables,
+    //and the public vectors (Airport Node type) smallAirports, medAirports, and largeAirports
     Airports();
     Airports(double lat_, double long_, double lat2_, double long2_, int baggageAmount, string filename);
     ~Airports();
@@ -33,8 +35,12 @@ public:
     void destroyGraph();
 
     //Algorithm
+    //Finds the closest start location based off of currLat and currLong, and closest end location based off of
+    //destLat and destLong
     bool BFS(Airport* startPoint);
     vector<vector<Airport*>> Kosaraju(Airport* startPoint);
+    //Find the most cost effective path between the start location and end location found in BFS()
+    //The optimal airport path is stored in private vector "solution"
     void Djistrka();
 
     //Helpers
@@ -44,6 +50,7 @@ public:
     void DFS(Airport* vertex, std::list<Airport*> visited, std::list<Airport*> finished, std::stack<Airport*> S);
     void transposeGraph(Airport* vertex, list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed);
     bool contains(list<Airport*> list, Airport* vertex);
+
     //Setters
     void setCurrLong(double val);
     void setCurrLat(double val);

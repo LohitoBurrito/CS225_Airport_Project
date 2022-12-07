@@ -28,25 +28,24 @@ TEST_CASE( "Test Closed/Heliport/Seabase Airports", "[closed Airports]") {
         REQUIRE(system.largeAirports[i]->type != "heliport");
         REQUIRE(system.largeAirports[i]->type != "seaplane_base");
     }
-    system.destroyGraph();
 }
 TEST_CASE( "Test CalcDist and CalcCost Algos 1", "[calcAlgos]"){
     //CHICAGO->DOHA
     Airports system = Airports(0, 0, 0, 0, 0, "Airports.json");
     double dist = system.calcDistance(41.97859955, -87.90480042, 25.273056, 51.608056);
-    REQUIRE(abs(dist - 11479) > 50);
+    REQUIRE(abs(dist - 11479) < 50);
     double cost = system.calcCost(41.97859955, -87.90480042, 25.273056, 51.608056, "large_airport");
     double expediaCost = 2778.38 / 2;
-    REQUIRE(abs(cost - expediaCost) > 400);
+    REQUIRE(abs(cost - expediaCost) < 400);
 }
 TEST_CASE( "Test CalcDist and CalcCost Algos 2", "[calcAlgos]"){
     //CHICAGO->FRANKFURT
     Airports system = Airports(0, 0, 0, 0, 0, "Airports.json");
     double dist = system.calcDistance(41.97859955, -87.90480042, 50.026402, 8.54313);
-    REQUIRE(abs(dist - 6989) > 50);
+    REQUIRE(abs(dist - 6989) < 50);
     double cost = system.calcCost(41.97859955, -87.90480042, 50.026402, 8.54313, "large_airport");
     double expediaCost = 2276.0 / 2;
-    REQUIRE(abs(cost - expediaCost) > 400);
+    REQUIRE(abs(cost - expediaCost) < 400);
 }
 TEST_CASE( "Test BFS + Dijkstra algorithm 1", "[bfs && dijkstra]" ){
     Airports system = Airports(41.97859955, -87.90480042, 25.273056, 51.608056, 2, "test2.json");
@@ -66,7 +65,7 @@ TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
 }
 TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && dijkstra]" ){
     //im about to morb
-    Airports system = Airports(41.77190018, -88.47570038, 41.77190018, -88.47570038, 2, "test3.json");
+    Airports system = Airports(41.77190018, -88.47570038, 41.77190018, -88.47570038, 2, "test2.json");
     system.BFS(system.medAirports[0]);
     REQUIRE(system.getDestination() == system.getDeparture());
     vector<vector<Airports::Airport*>> connectedComponents = system.Kosaraju(system.getDeparture());

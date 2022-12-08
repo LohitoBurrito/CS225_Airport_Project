@@ -4,15 +4,13 @@
 #include <cstdio>
 #include <string>
 #include <queue>
-#include <fstream>
-#include <jsoncpp/json/json.h>
 #include <cmath>
 
 using namespace std;
 
 TEST_CASE( "Test Closed/Heliport/Seabase Airports", "[closed Airports]") {
     //Closed Airport Check
-    Airports system = Airports(0, 0, 0, 0, 0, "Airports.json");
+    Airports system = Airports(0, 0, 0, 0, 0, "Airports.csv");
     for (int i = 0; i < (int) system.smallAirports.size(); i++) {
         REQUIRE(system.smallAirports[i]->type != "closed");
         REQUIRE(system.smallAirports[i]->type != "heliport");
@@ -31,7 +29,7 @@ TEST_CASE( "Test Closed/Heliport/Seabase Airports", "[closed Airports]") {
 }
 TEST_CASE( "Test CalcDist and CalcCost Algos 1", "[calcAlgos]"){
     //CHICAGO->DOHA
-    Airports system = Airports(0, 0, 0, 0, 0, "Airports.json");
+    Airports system = Airports(0, 0, 0, 0, 0, "Airports.csv");
     double dist = system.calcDistance(41.97859955, -87.90480042, 25.273056, 51.608056);
     REQUIRE(abs(dist - 11479) < 50);
     double cost = system.calcCost(41.97859955, -87.90480042, 25.273056, 51.608056, "large_airport");
@@ -40,7 +38,7 @@ TEST_CASE( "Test CalcDist and CalcCost Algos 1", "[calcAlgos]"){
 }
 TEST_CASE( "Test CalcDist and CalcCost Algos 2", "[calcAlgos]"){
     //CHICAGO->FRANKFURT
-    Airports system = Airports(0, 0, 0, 0, 0, "Airports.json");
+    Airports system = Airports(0, 0, 0, 0, 0, "Airports.csv");
     double dist = system.calcDistance(41.97859955, -87.90480042, 50.026402, 8.54313);
     REQUIRE(abs(dist - 6989) < 50);
     double cost = system.calcCost(41.97859955, -87.90480042, 50.026402, 8.54313, "large_airport");
@@ -48,7 +46,7 @@ TEST_CASE( "Test CalcDist and CalcCost Algos 2", "[calcAlgos]"){
     REQUIRE(abs(cost - expediaCost) < 400);
 }
 TEST_CASE( "Test BFS + Dijkstra algorithm 1", "[bfs && dijkstra]" ){
-    Airports system = Airports(41.97859955, -87.90480042, 25.273056, 51.608056, 2, "test2.json");
+    Airports system = Airports(41.97859955, -87.90480042, 25.273056, 51.608056, 2, "test2.csv");
     system.BFS(system.medAirports[0]);
     REQUIRE(system.getDestination()->name == "Hamad International Airport");
     REQUIRE(system.getDeparture()->name == "Chicago O'Hare International Airport");
@@ -64,24 +62,25 @@ TEST_CASE( "Test BFS + Dijkstra algorithm 1", "[bfs && dijkstra]" ){
     }
 }
 TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
-    Airports system = Airports(41.77190018, -88.47570038, 23.71829987, -15.93200016, 2, "test.json");
+    Airports system = Airports(41.77190018, -88.47570038, 23.71829987, -15.93200016, 2, "test.csv");
     system.BFS(system.medAirports[0]);
     REQUIRE(system.getDestination()->name == "Dakhla Airport");
     REQUIRE(system.getDeparture()->name == "Aurora Municipal Airport");
     system.Djistrka();
+
     REQUIRE(system.getSolution().size() == 3);
     cout << "\nPath: ";
     for (size_t i = 0; i < system.getSolution().size(); i++) {
         if (i == system.getSolution().size() - 1) {
-            cout << system.getSolution()[i] -> name <<"\n\n";
+            cout << system.getSolution()[i]->name << "\n\n";
         } else {
-            cout << system.getSolution()[i] -> name << " -> ";
+            cout << system.getSolution()[i]->name << " -> ";
         }
     }
 }
 TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && dijkstra]" ){
     //im about to morb
-    Airports system = Airports(41.77190018, -88.47570038, 41.77190018, -88.47570038, 2, "test2.json");
+    Airports system = Airports(41.77190018, -88.47570038, 41.77190018, -88.47570038, 2, "test2.csv");
     system.BFS(system.medAirports[0]);
     REQUIRE(system.getDestination() == system.getDeparture());
     vector<vector<Airports::Airport*>> connectedComponents = system.Kosaraju(system.getDeparture());

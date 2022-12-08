@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <string>
 #include <fstream>
-#include <jsoncpp/json/json.h>
 #include "Airports.h"
 
 using namespace std;

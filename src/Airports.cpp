@@ -4,7 +4,6 @@
 #include <string>
 #include <queue>
 #include <fstream>
-#include <jsoncpp/json/json.h>
 #include <vector>
 #include <cmath>
 #include <algorithm>
@@ -37,9 +36,47 @@ Airports::~Airports() { destroyGraph(); }
 
 //Parse and Creating Graph
 void Airports::parseData() {
-    ifstream file("../tests/data/" + fileName); // JSON data
-    Json::Value jsonData; // contains JSON Data
-    file >> jsonData;
+    ifstream file;
+    file.open("../tests/data/" + fileName); // JSON data
+
+    while (file.good()) {
+        string tp, n, latTmp, lonTmp, elev, iata, munc, cont;
+        double lat, lon;
+        getline(file, tp, ',');
+        getline(file, n, ',');
+        getline(file, latTmp, ',');
+        getline(file, lonTmp, ',');
+        getline(file, elev, ',');
+        getline(file, cont, ',');
+        getline(file, munc, ',');
+        getline(file, iata, '\n');
+        lat = atof(latTmp.c_str());
+        lon = atof(lonTmp.c_str());
+        if (tp == "small_airport") {
+            Airport* airport = new Airport();
+            airport->type = tp;
+            airport->name = n;
+            airport->latitude = lat;
+            airport->longitude = lon;
+            smallAirports.push_back(airport);
+        } else if (tp == "medium_airport") {
+            Airport* airport = new Airport();
+            airport->type = tp;
+            airport->name = n;
+            airport->latitude = lat;
+            airport->longitude = lon;
+            medAirports.push_back(airport);
+        } else if (tp == "large_airport") {
+            Airport* airport = new Airport();
+            airport->type = tp;
+            airport->name = n;
+            airport->latitude = lat;
+            airport->longitude = lon;
+            largeAirports.push_back(airport);
+        }
+    }
+
+    file.close();
 
     /*
     // We can print out the JSON data
@@ -50,28 +87,6 @@ void Airports::parseData() {
         cout << "latitude_deg: " << jsonData[0]["latitude_deg"] << "\n";
         cout << "longitude_deg: " << jsonData[0]["longitude_deg"] << "\n";
     */
-
-    for (int i = 0; i < (int) jsonData.size(); i++) {
-        //Place each airport in the specified type private vector
-        //Note if the airport is "closed," it will be discarded
-        if (jsonData[i]["type"].asString() != "closed") {
-            Airport* airport = new Airport();
-            airport->type = jsonData[i]["type"].asString();
-            airport->name = jsonData[i]["name"].asString();
-            airport->latitude = jsonData[i]["latitude_deg"].asDouble();
-            airport->longitude = jsonData[i]["longitude_deg"].asDouble();
-
-            if (jsonData[i]["type"].asString() == "small_airport") {
-                smallAirports.push_back(airport);
-            }
-            else if (jsonData[i]["type"].asString() == "medium_airport") {
-                medAirports.push_back(airport);
-            }
-            else if (jsonData[i]["type"].asString() == "large_airport") {
-                largeAirports.push_back(airport);
-            }
-        }
-    }
 }
 void Airports::createGraph() {
     // 3 departure assumptions:

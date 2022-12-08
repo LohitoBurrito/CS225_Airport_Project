@@ -37,7 +37,7 @@ Airports::~Airports() { destroyGraph(); }
 //Parse and Creating Graph
 void Airports::parseData() {
     ifstream file;
-    file.open("../tests/data/" + fileName); // JSON data
+    file.open("../tests/data/csv/" + fileName); // JSON data
 
     while (file.good()) {
         string tp, n, latTmp, lonTmp, elev, iata, munc, cont;

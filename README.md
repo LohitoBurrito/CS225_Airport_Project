@@ -1,3 +1,5 @@
+## Final Presentation Video:
+(click on the image below for the YouTube video to play)
 [![Final Presentation](https://img.youtube.com/vi/U5MpwKNa81I/0.jpg)](https://www.youtube.com/watch?v=U5MpwKNa81I)
 ## Github Organization: [describe the physical location of all major files and deliverables (code, tests, data, the written report, the presentation video, etc…)]
 

@@ -5,7 +5,7 @@
 ## Github Organization: 
 
 ### Project Directory Setup:
-[describe the physical location of all major files and deliverables (code, tests, data, the written report, the presentation video, etc…)]
+![Directory](https://github.com/LohitoBurrito/Airport-Project/blob/main/assets/DirectorySetup.png)
 
 ## Running Instructions
 

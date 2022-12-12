@@ -90,7 +90,7 @@ TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && Kosaraju]" ){
             Kosaraju(system.getDeparture());
     for (int i = 0; i < (int) connectedComponents.size(); i++) {
         for (int j = 0; j < (int) connectedComponents[i].size(); j++) {
-            cout<<connectedComponents[i][j]<<" ";
+            cout<<connectedComponents[i][j]->name<<"->";
         }
         cout<<"\n";
     }

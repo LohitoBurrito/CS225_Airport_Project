@@ -5,7 +5,9 @@
 ### Installation:
 
 Clone the repo by running the command below in whatever folder you want to save the project in:
+```
 git clone https://github.com/LohitoBurrito/Airport-Project.git
+```
 
 Open up and turn on your cs225 Docker environment.
 If you do not have it, follow the instructions here: (https://courses.engr.illinois.edu/cs225/fa2022/resources/own-machine/).

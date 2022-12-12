@@ -215,23 +215,34 @@ vector<vector<Airports::Airport*>> Airports::Kosaraju(Airport* startPoint) {
     std::map<Airport*, vector<Airport*>> t_graph;
     std::list<Airport*> r_visited;
     transposeGraph(startPoint, r_visited, t_graph);
-    visited = list<Airport*>();
 
     vector<vector<Airport*>> sc_components;
-
     while (!S.empty()) {
 
         if (!contains(visited, S.top())) {
             DFS(S.top(), visited, t_graph);
         }
         S.pop();
-
+        vector<Airport*> component;
         if (!visited.empty()) {
-            vector<Airport*> component;
             for (Airport* a : visited) {
                 component.push_back(a);
             }
-            sc_components.push_back(component);
+        }
+        if (component.size() == visited.size() == r_visited.size()) {
+            bool covered = false;
+            for (vector<Airport*> v : sc_components) {
+                for (Airport* a : v) {
+                    for (Airport* b : component) {
+                        if (a == b) {
+                            covered = true;
+                        }
+                    }
+                }
+            }
+            if (!covered) {
+                sc_components.push_back(component);
+            }
         }
     }
     return sc_components;
@@ -239,15 +250,15 @@ vector<vector<Airports::Airport*>> Airports::Kosaraju(Airport* startPoint) {
 //Helpers
 void Airports::DFS(Airport* vertex, std::list<Airport*>& visited, std::map<Airport*, vector<Airport*>> graph) {
     visited.push_back(vertex);
-    for (Airport* a : graph.at(vertex)) {
+    for (Airport* a : graph[vertex]) {
         if (contains(visited, a)) {
             DFS(a, visited, graph);
         }
     }
 }
 
-void Airports::DFS(Airports::Airport* vertex, std::list<Airports::Airport*>& visited, std::list<Airports::Airport*> finished,
-                   std::stack<Airports::Airport*> S) {
+void Airports::DFS(Airports::Airport* vertex, std::list<Airports::Airport*>& visited, std::list<Airports::Airport*>& finished,
+                   std::stack<Airports::Airport*>& S) {
     visited.push_back(vertex);
     for (std::pair<Airport*, double> v : vertex->connections) {
         if (!contains(visited, v.first)) {

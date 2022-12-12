@@ -3,7 +3,7 @@
 [![Final Presentation](https://img.youtube.com/vi/U5MpwKNa81I/0.jpg)](https://www.youtube.com/watch?v=U5MpwKNa81I)
 ## Github Organization: 
 
-### Project Directory Setup
+### Project Directory Setup:
 [describe the physical location of all major files and deliverables (code, tests, data, the written report, the presentation video, etc…)]
 
 ## Running Instructions

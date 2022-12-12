@@ -134,11 +134,12 @@ include(Catch)
 
 
 add_executable(test ${tests_src})
+target_link_libraries(test PRIVATE Catch2::Catch2WithMain src)
 
 catch_discover_tests(test)
 
 # Add the assignment entrypoints using our libs and src code.
 foreach(entrypoint IN LISTS assignment_entrypoints)
     add_executable(${entrypoint} ${entry_dir}/${entrypoint}.cpp entry/main.cpp)
-    target_link_libraries(${entrypoint})
+    target_link_libraries(${entrypoint} PRIVATE src)
 endforeach()

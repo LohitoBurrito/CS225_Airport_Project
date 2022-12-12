@@ -58,7 +58,7 @@ Kosaraju's algorithm will take in an int number of airports to travel, our graph
 
 ### Function Outputs
 
-Our BFS algorithm will output a map of airport names to vectors. This will be the input of our Djistrka’s algorithm. The output of our Djikstra’s algorithm will be the most cost effective shortest path in a form of the vector which will be printed in our terminal. The output of Kosaraju’s algorithm will be a vector containing the most efficient connected component for a looped journey (not that I know anyone who would want to fly a plane to just get back to the startpoint).
+Our BFS algorithm will output a map of airport names to vectors. This will be the input of our Djistrka’s algorithm. The output of our Djikstra’s algorithm will be the most cost effective shortest path in a form of the vector which will be printed in our terminal. The output of Kosaraju’s algorithm will be a vector containing the most efficient connected component for a looped journey.
 
 ### Function Efficiency
 

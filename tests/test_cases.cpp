@@ -79,7 +79,7 @@ TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
         }
     }
 }
-TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && dijkstra]" ){
+TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && Kosaraju]" ){
     //im about to morb
     Airports system = Airports(41.77190018, -88.47570038,
                                41.77190018, -88.47570038,

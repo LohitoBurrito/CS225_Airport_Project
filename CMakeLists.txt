@@ -131,16 +131,14 @@ add_subdirectory(${src_dir})
 file(GLOB_RECURSE tests_src CONFIGURE_DEPENDS ${tests_dir}/*.cpp)
 
 include(Catch)
-find_package(jsoncpp REQUIRED)
 
 
 add_executable(test ${tests_src})
-target_link_libraries(test PRIVATE Catch2::Catch2WithMain jsoncpp libs src)
 
 catch_discover_tests(test)
 
 # Add the assignment entrypoints using our libs and src code.
 foreach(entrypoint IN LISTS assignment_entrypoints)
     add_executable(${entrypoint} ${entry_dir}/${entrypoint}.cpp entry/main.cpp)
-    target_link_libraries(${entrypoint} PRIVATE jsoncpp libs src)
+    target_link_libraries(${entrypoint})
 endforeach()

@@ -1,5 +1,66 @@
 ## Github Organization: [describe the physical location of all major files and deliverables (code, tests, data, the written report, the presentation video, etc…)]
 
+├───.idea
+│   └───inspectionProfiles
+├───.vscode
+├───build
+│   ├───CMakeFiles
+│   │   ├───3.22.1
+│   │   │   ├───CompilerIdC
+│   │   │   │   └───tmp
+│   │   │   └───CompilerIdCXX
+│   │   │       └───tmp
+│   │   ├───CMakeTmp
+│   │   ├───main.dir
+│   │   │   └───entry
+│   │   └───test.dir
+│   │       └───tests
+│   ├───lib
+│   │   └───CMakeFiles
+│   │       ├───cs225.dir
+│   │       │   └───cs225
+│   │       └───lodepng.dir
+│   │           └───lodepng
+│   └───src
+│       └───CMakeFiles
+│           └───src.dir
+├───cmake-build-debug
+│   ├───.cmake
+│   │   └───api
+│   │       └───v1
+│   │           ├───query
+│   │           └───reply
+│   ├───CMakeFiles
+│   │   ├───3.22.1
+│   │   │   ├───CompilerIdC
+│   │   │   │   └───tmp
+│   │   │   └───CompilerIdCXX
+│   │   │       └───tmp
+│   │   ├───CMakeTmp
+│   │   ├───main.dir
+│   │   │   └───entry
+│   │   └───test.dir
+│   │       └───tests
+│   ├───lib
+│   │   └───CMakeFiles
+│   │       ├───cs225.dir
+│   │       │   └───cs225
+│   │       └───lodepng.dir
+│   │           └───lodepng
+│   ├───src
+│   │   └───CMakeFiles
+│   │       └───src.dir
+│   └───Testing
+│       └───Temporary
+├───entry
+├───lib
+│   ├───cs225
+│   └───lodepng
+├───src
+└───tests
+    └───data
+        ├───csv
+        └───json
 
 
 

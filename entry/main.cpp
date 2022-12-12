@@ -27,7 +27,7 @@ int main() {
     cout << "How much bags are you travelling with: ";
     cin >> baggageAmount;
 
-    Airports system = Airports(currLat_, currLong_, destLat_, destLong_, (int) baggageAmount, "Airports.json");
+    Airports system = Airports(currLat_, currLong_, destLat_, destLong_, (int) baggageAmount, "Airports.csv");
 
     system.BFS(system.medAirports[0]);
     if (system.getDeparture() != system.getDestination()) {

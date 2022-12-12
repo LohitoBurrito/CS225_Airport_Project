@@ -46,9 +46,9 @@ public:
     //Helpers
     static double calcDistance(double lat1, double long1, double lat2, double long2);
     double calcCost(double lat1, double long1, double lat2, double long2, const string& startAirport);
-    void DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph);
-    void DFS(Airport* vertex, std::list<Airport*> visited, std::list<Airport*> finished, std::stack<Airport*> S);
-    void transposeGraph(Airport* vertex, list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed);
+    void DFS(Airport* vertex, std::list<Airport*>& visited, std::map<Airport*, vector<Airport*>> graph);
+    void DFS(Airport* vertex, std::list<Airport*>& visited, std::list<Airport*> finished, std::stack<Airport*> S);
+    void transposeGraph(Airport* vertex, list<Airport*>& visited, std::map<Airport*, vector<Airport*>> transposed);
     bool contains(list<Airport*> list, Airport* vertex);
 
     //Setters

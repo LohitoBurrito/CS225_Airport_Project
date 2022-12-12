@@ -237,7 +237,7 @@ vector<vector<Airports::Airport*>> Airports::Kosaraju(Airport* startPoint) {
     return sc_components;
 }
 //Helpers
-void Airports::DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airport*, vector<Airport*>> graph) {
+void Airports::DFS(Airport* vertex, std::list<Airport*>& visited, std::map<Airport*, vector<Airport*>> graph) {
     visited.push_back(vertex);
     for (Airport* a : graph.at(vertex)) {
         if (contains(visited, a)) {
@@ -246,7 +246,7 @@ void Airports::DFS(Airport* vertex, std::list<Airport*> visited, std::map<Airpor
     }
 }
 
-void Airports::DFS(Airports::Airport* vertex, std::list<Airports::Airport*> visited, std::list<Airports::Airport*> finished,
+void Airports::DFS(Airports::Airport* vertex, std::list<Airports::Airport*>& visited, std::list<Airports::Airport*> finished,
                    std::stack<Airports::Airport*> S) {
     visited.push_back(vertex);
     for (std::pair<Airport*, double> v : vertex->connections) {
@@ -257,7 +257,7 @@ void Airports::DFS(Airports::Airport* vertex, std::list<Airports::Airport*> visi
     finished.push_back(vertex);
     S.push(vertex);
 }
-void Airports::transposeGraph(Airports::Airport* vertex, list<Airport*> visited, std::map<Airport*, vector<Airport*>> transposed) {
+void Airports::transposeGraph(Airports::Airport* vertex, list<Airport*>& visited, std::map<Airport*, vector<Airport*>> transposed) {
     visited.push_back(vertex);
     for (std::pair<Airport*, double> v : vertex->connections) {
         if (transposed.count(v.first) > 0) {

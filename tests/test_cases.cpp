@@ -46,7 +46,8 @@ TEST_CASE( "Test CalcDist and CalcCost Algos 2", "[calcAlgos]"){
     REQUIRE(abs(cost - expediaCost) < 400);
 }
 TEST_CASE( "Test BFS + Dijkstra algorithm 1", "[bfs && dijkstra]" ){
-    Airports system = Airports(41.97859955, -87.90480042, 25.273056, 51.608056, 2, "test2.csv");
+    Airports system = Airports(41.97859955, -87.90480042, 25.273056, 
+                               51.608056,2, "test2.csv");
     system.BFS(system.medAirports[0]);
     REQUIRE(system.getDestination()->name == "Hamad International Airport");
     REQUIRE(system.getDeparture()->name == "Chicago O'Hare International Airport");
@@ -80,10 +81,13 @@ TEST_CASE( "Test BFS + Dijkstra algorithm 2", "[bfs && dijkstra]" ){
 }
 TEST_CASE( "Test BFS + Kosaraju algorithm 1", "[bfs && dijkstra]" ){
     //im about to morb
-    Airports system = Airports(41.77190018, -88.47570038, 41.77190018, -88.47570038, 2, "test2.csv");
+    Airports system = Airports(41.77190018, -88.47570038,
+                               41.77190018, -88.47570038,
+                               2, "test.csv");
     system.BFS(system.medAirports[0]);
     REQUIRE(system.getDestination() == system.getDeparture());
-    vector<vector<Airports::Airport*>> connectedComponents = system.Kosaraju(system.getDeparture());
+    vector<vector<Airports::Airport*>> connectedComponents = system.
+            Kosaraju(system.getDeparture());
     for (int i = 0; i < (int) connectedComponents.size(); i++) {
         for (int j = 0; j < (int) connectedComponents[i].size(); j++) {
             cout<<connectedComponents[i][j]<<" ";

@@ -1,7 +1,10 @@
 ## Final Presentation Video:
 (click on the image below for the YouTube video to play)
 [![Final Presentation](https://img.youtube.com/vi/U5MpwKNa81I/0.jpg)](https://www.youtube.com/watch?v=U5MpwKNa81I)
-## Github Organization: [describe the physical location of all major files and deliverables (code, tests, data, the written report, the presentation video, etc…)]
+## Github Organization: 
+
+### Project Directory Setup
+[describe the physical location of all major files and deliverables (code, tests, data, the written report, the presentation video, etc…)]
 
 ## Running Instructions
 
@@ -26,7 +29,7 @@ cmake ..
 
 Now, you have created the build file and are ready to test :)
 
-To test, runt he following commands in the build folder:
+To test, run the following commands in the build folder:
 ```
 make test
 ./test
@@ -49,6 +52,4 @@ make main
 You will then be prompted to enter your current latitude and longitude, destination latitude and longitude, as well as the number of baggage you will be travelling with. 
 You will receive the status notifications in the console.
 Given your current location and destination location, the BFS algorithm will find your start and end airport nodes. If these nodes are the same, the console will print all the connected components to your start airport using Kosaraju algorithm. Otherwise, it will provide the most cost effective route from your start airport to your end airport using Dijstkra's algorithm. 
-
-## Project Directory Setup
 

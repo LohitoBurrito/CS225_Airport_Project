@@ -1,6 +1,6 @@
 ## Written Report
 
-###Images of results from running two tests cases on the BFS and Dijsktra’s algorithms:
+### Images of results from running two tests cases on the BFS and Dijsktra’s algorithms:
 ![TEST CASE 1](https://github.com/LohitoBurrito/Airport-Project/blob/main/assets/test_case_1.png)
 ![TEST CASE 2](https://github.com/LohitoBurrito/Airport-Project/blob/main/assets/test_case_1.png)
 
